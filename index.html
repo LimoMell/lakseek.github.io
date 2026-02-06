@@ -13,7 +13,6 @@
             <img src="assets/icon/lmLogo.png" alt="limoMellLogo" class="logo" width="64" height="64">
             <h1 class="name">里莫 Limo</h1>
         </div>
-        <button class="themeToggle" type="button" id="themeToggle" aria-label="切換深色/淺色模式">淺色模式</button>
     </div>
     <div class="middle">
         <!-- 簡介 -->
@@ -106,6 +105,21 @@
     </div>
     <div class="bottom">
         <p>更新日期：2026/2/6</p>
+        <button
+            class="themeToggle"
+            type="button"
+            id="themeToggle"
+            aria-label="切換深色/淺色模式"
+        >
+            <img
+                src="assets/icon/lightTheme.png"
+                alt="切換深色/淺色模式"
+                class="themeToggleIcon"
+                id="themeToggleIcon"
+                width="24"
+                height="24"
+            >
+        </button>
     </div>
     <script>
         (function () {
@@ -113,10 +127,16 @@
             const html = document.documentElement;
             const toggleBtn = document.getElementById("themeToggle");
             const logo = document.querySelector(".top .logo");
+            const toggleIcon = document.getElementById("themeToggleIcon");
 
             const logoFor = {
                 light: "assets/icon/lmLogo.png",
                 dark: "assets/icon/lmLogo.png",
+            };
+
+            const iconFor = {
+                light: "assets/icon/lightTheme.png",
+                dark: "assets/icon/darkTheme.png",
             };
 
             const media = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
@@ -151,12 +171,12 @@
                 const effective = getEffectiveTheme(pref);
                 html.setAttribute("data-theme", effective);
 
-                if (toggleBtn) {
-                    toggleBtn.textContent = effective === "dark" ? "深色模式" : "淺色模式";
-                }
-
                 if (logo) {
                     logo.src = logoFor[effective] || logoFor.light;
+                }
+
+                if (toggleIcon) {
+                    toggleIcon.src = iconFor[effective] || iconFor.light;
                 }
             }
 

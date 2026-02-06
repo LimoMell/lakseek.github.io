@@ -71,23 +71,26 @@ body {
 
 .themeToggle {
     background: transparent;
-    color: var(--header-fg);
-    border: 1px solid var(--header-fg);
-    border-radius: 0;
-    padding: 0.5rem 0.75rem;
-    font: inherit;
+    border: none;
+    padding: 0;
+    margin: 0;
     cursor: pointer;
     flex: 0 0 auto;
 }
 
 .themeToggle:hover {
-    background: var(--header-fg);
-    color: var(--header-bg);
+    opacity: 0.85;
 }
 
 .themeToggle:focus-visible {
     outline: 2px solid var(--header-fg);
     outline-offset: 2px;
+}
+
+.themeToggleIcon {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .middle {
@@ -143,6 +146,10 @@ body {
     padding: 1rem;
     margin-top: 2rem;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
 }
 
 .bottom p {
