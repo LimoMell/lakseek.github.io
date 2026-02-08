@@ -84,7 +84,7 @@
     }
 })();
 
-// 彩蛋
+// 彩蛋 Toast
 function showKonamiEgg() {
     var el = document.createElement("div");
     el.className = "konami-egg";
@@ -99,9 +99,9 @@ function showKonamiEgg() {
     }, 2200);
 }
 
-// Konami 鍵盤彩蛋
+// 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
-    var konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyB", "KeyA", "KeyA"];
+    var konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA", "KeyB", "KeyA"];
     var index = 0;
 
     document.addEventListener("keydown", function (e) {
@@ -117,7 +117,7 @@ function showKonamiEgg() {
     });
 })();
 
-// 點擊設定圖彩蛋
+// 彩蛋觸發：點擊設定圖 6 次
 (function () {
     var fursona = document.getElementById("fursona1");
     var count = 0;
