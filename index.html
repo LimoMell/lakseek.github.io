@@ -91,7 +91,7 @@
 
         <!-- 設定瑣事 -->
         <h2>🐾 關於設定</h2>
-        <img src="assets/chara/fursona1.png" alt="limoFursona" width="240">
+        <img id="fursona1" src="assets/chara/fursona1.png" alt="limoFursona" width="240">
         <h3>里莫/Limo</h3>
         <p>
             • 有些彩虹的元素：靈感是 WACCA 的ルーン，覺得他很帥<br>
@@ -124,6 +124,7 @@
         </button>
     </div>
     <script>
+        // 深色/淺色模式切換
         (function () {
             const storageKey = "theme-preference";
             const html = document.documentElement;
@@ -205,6 +206,58 @@
             } else if (media && typeof media.addListener === "function") {
                 media.addListener(function () {
                     if (pref == null) render(pref);
+                });
+            }
+        })();
+
+        // 彩蛋
+        function showKonamiEgg() {
+            var el = document.createElement("div");
+            el.className = "konami-egg";
+            el.setAttribute("role", "status");
+            el.textContent = "哇！你在做什麼 (ㆁωㆁ)";
+            document.body.appendChild(el);
+            el.offsetHeight;
+            el.classList.add("konami-egg-visible");
+            setTimeout(function () {
+                el.classList.remove("konami-egg-visible");
+                setTimeout(function () { el.remove(); }, 400);
+            }, 2200);
+        }
+
+        // Konami 鍵盤彩蛋
+        (function () {
+            var konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyB", "KeyA", "KeyA"];
+            var index = 0;
+
+            document.addEventListener("keydown", function (e) {
+                if (e.code === konami[index]) {
+                    index++;
+                    if (index === konami.length) {
+                        index = 0;
+                        showKonamiEgg();
+                    }
+                } else {
+                    index = 0;
+                }
+            });
+        })();
+
+        // 點擊設定圖彩蛋
+        (function () {
+            var fursona = document.getElementById("fursona1");
+            var count = 0;
+            var resetTimer = null;
+
+            if (fursona) {
+                fursona.addEventListener("click", function () {
+                    count++;
+                    clearTimeout(resetTimer);
+                    resetTimer = setTimeout(function () { count = 0; }, 1500);
+                    if (count >= 6) {
+                        count = 0;
+                        showKonamiEgg();
+                    }
                 });
             }
         })();

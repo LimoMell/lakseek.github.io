@@ -156,3 +156,24 @@ body {
     margin: 0;
     font-size: 0.875rem;
 }
+
+.konami-egg {
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(1rem);
+    padding: 0.5rem 1rem;
+    background: var(--header-bg);
+    color: var(--header-fg);
+    border: 1px solid var(--header-fg);
+    font-size: 0.875rem;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.konami-egg.konami-egg-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
