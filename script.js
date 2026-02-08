@@ -73,13 +73,18 @@
         });
     }
 
+    // 系統深色模式變更時：改為跟隨系統並清除手動偏好，讓網站之後仍會隨系統自動切換
     if (media && typeof media.addEventListener === "function") {
         media.addEventListener("change", function () {
-            if (pref == null) render(pref);
+            pref = null;
+            storePreference(null);
+            render(pref);
         });
     } else if (media && typeof media.addListener === "function") {
         media.addListener(function () {
-            if (pref == null) render(pref);
+            pref = null;
+            storePreference(null);
+            render(pref);
         });
     }
 })();
