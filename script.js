@@ -176,7 +176,7 @@
 
         downloadLink = document.createElement("a");
         downloadLink.className = "image-viewer-button";
-        downloadLink.textContent = "下載原圖";
+        downloadLink.textContent = "下載圖片";
         downloadLink.setAttribute("download", "");
 
         closeBtn = document.createElement("button");
@@ -258,7 +258,7 @@
             index++;
             if (index === konami.length) {
                 index = 0;
-                showToast("哇！別再按啦 QwQ");
+                showToast("你在期待些什麼呢owo");
             }
         } else {
             index = 0;
@@ -295,7 +295,7 @@
         window.openImageViewer({
             src: "assets/original/fursona1.png",
             alt: "limoOriginPic",
-            caption: "里莫/Limo 的設定圖（原圖）",
+            caption: "嚴禁用於 AI 相關應用、二次修改本圖。",
             downloadName: "limo-fursona1-original.png"
         });
     });
