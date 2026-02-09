@@ -176,7 +176,7 @@
 
         downloadLink = document.createElement("a");
         downloadLink.className = "image-viewer-button";
-        downloadLink.textContent = "下載圖片";
+        downloadLink.textContent = "下載";
         downloadLink.setAttribute("download", "");
 
         closeBtn = document.createElement("button");
@@ -295,7 +295,7 @@
         window.openImageViewer({
             src: "assets/original/fursona1.png",
             alt: "limoOriginPic",
-            caption: "嚴禁用於 AI 相關應用、二次修改本圖。",
+            caption: "此圖片嚴禁用於 AI 相關應用、二次修改、未經許可轉載。",
             downloadName: "limo-fursona1-original.png"
         });
     });
