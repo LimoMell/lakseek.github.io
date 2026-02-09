@@ -73,7 +73,6 @@
         });
     }
 
-    // 系統深色模式變更時：改為跟隨系統並清除手動偏好，讓網站之後仍會隨系統自動切換
     if (media && typeof media.addEventListener === "function") {
         media.addEventListener("change", function () {
             pref = null;
@@ -89,19 +88,67 @@
     }
 })();
 
+// Toast 訊息
+(function () {
+    var activeToasts = [];
+    var toastContainer = null;
+
+    function initToastContainer() {
+        if (!toastContainer) {
+            toastContainer = document.createElement("div");
+            toastContainer.className = "toast-container";
+            toastContainer.setAttribute("aria-live", "polite");
+            toastContainer.setAttribute("aria-atomic", "false");
+            document.body.appendChild(toastContainer);
+        }
+        return toastContainer;
+    }
+
+    function updateToastPositions() {
+        activeToasts.forEach(function (toast, index) {
+            var offset = index * (3.5 + 0.5);
+            toast.style.bottom = (3 + offset) + "rem";
+        });
+    }
+
+    function removeToast(toast) {
+        var index = activeToasts.indexOf(toast);
+        if (index > -1) {
+            activeToasts.splice(index, 1);
+            toast.classList.remove("toast-visible");
+            setTimeout(function () {
+                toast.remove();
+                updateToastPositions();
+            }, 400);
+        }
+    }
+
+    window.showToast = function (message, duration) {
+        if (typeof message !== "string" || message.length === 0) return;
+        duration = duration || 2200;
+
+        var container = initToastContainer();
+        var toast = document.createElement("div");
+        toast.className = "toast";
+        toast.setAttribute("role", "status");
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        activeToasts.push(toast);
+        updateToastPositions();
+
+        toast.offsetHeight;
+        toast.classList.add("toast-visible");
+
+        setTimeout(function () {
+            removeToast(toast);
+        }, duration);
+    };
+})();
+
 // 彩蛋 Toast
-function showKonamiEgg() {
-    var el = document.createElement("div");
-    el.className = "konami-egg";
-    el.setAttribute("role", "status");
-    el.textContent = "哇！別再按啦 QwQ";
-    document.body.appendChild(el);
-    el.offsetHeight;
-    el.classList.add("konami-egg-visible");
-    setTimeout(function () {
-        el.classList.remove("konami-egg-visible");
-        setTimeout(function () { el.remove(); }, 400);
-    }, 2200);
+function showEasterEgg() {
+    showToast("哇！別再按啦 QwQ");
 }
 
 // 彩蛋觸發：↑↑↓↓←→←→BABA
@@ -114,7 +161,7 @@ function showKonamiEgg() {
             index++;
             if (index === konami.length) {
                 index = 0;
-                showKonamiEgg();
+                showEasterEgg();
             }
         } else {
             index = 0;
@@ -135,7 +182,7 @@ function showKonamiEgg() {
             resetTimer = setTimeout(function () { count = 0; }, 1500);
             if (count >= 6) {
                 count = 0;
-                showKonamiEgg();
+                showEasterEgg();
             }
         });
     }
