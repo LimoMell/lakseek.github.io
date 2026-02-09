@@ -266,7 +266,7 @@
     });
 })();
 
-// 彩蛋觸發：點擊 logo 6 次
+// 彩蛋觸發：切換深色/淺色模式 6 次
 (function () {
     var fursona = document.getElementById("themeToggleEgg");
     var count = 0;
@@ -287,7 +287,7 @@
 
 // Limo OriginPic
 (function () {
-    var link = document.getElementById("fursona1OriginalLink");
+    var link = document.getElementById("fursona1OriginPic");
     if (!link || typeof window.openImageViewer !== "function") return;
 
     link.addEventListener("click", function (e) {
