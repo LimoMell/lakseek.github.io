@@ -300,3 +300,82 @@
         });
     });
 })();
+
+// 每日隨機歌曲
+(function () {
+    var songs = [
+        // MSTP
+        { title: "C418 - Alpha (from Minecraft)", url: "https://youtu.be/q6o7qpPHd7g" },
+        { title: "KIVΛ, Ice - ͟͝͞Ⅱ́̕ (from Cytus II)", url: "https://youtu.be/H2k7TMT3ouA" },
+        { title: "KIVΛ - The Whole Rest (from Cytus II)", url: "https://youtu.be/TWqMQeVqqnA"},
+        { title: "Theatrum Aeternum - acta est fabula, plaudite (from vivid/stasis)", url: "https://youtu.be/TPTsSu77MKI" },
+        { title: "eicateve - R.I.P.", url: "https://youtu.be/QJakdR6FWdg" },
+        { title: "Poppin'Party - Returns (from BanG Dream!)", url: "https://youtu.be/zWKV5yudE18" },
+        { title: "ryo (supercell) - ODDS&ENDS (unofficial)", url: "https://youtu.be/HUzLUGKwQJc" },
+        { title: "Ice - L", url: "https://youtu.be/ZXy_1LA-RlA" },
+        { title: "Ice - L2 -Ascension- (Act 1) (unofficial)", url: "https://youtu.be/lAkUpYCUXCU" },
+        { title: "Ice - L2 -Ascension- (Act 2) (unofficial)", url: "https://youtu.be/8nF7MU5iGng" },
+        { title: "Toby Fox - MEGALOVANIA (from UNDERTALE)", url: "https://youtu.be/KK3KXAECte4" },
+        { title: "ああああ - トゥルエンド (from でびコネ)", url: "https://youtu.be/hK7Inl9Rark" },
+        { title: "Sta - Incyde (from Cytus II)", url: "https://youtu.be/-1OiVXRGE-U" },
+        { title: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ - paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0" },
+        { title: "Knighthood - Super Universe (Knighthood Remix) (unofficial)", url: "https://youtu.be/v7rqB-o52tE" },
+        { title: "technoplanet - XYZ (from Cytus II)", url: "https://youtu.be/ZYXFo637GNc" },
+        { title: "Team Grimoire - Grievous Lady (from Arcaea)", url: "https://youtu.be/QXeaLw2s-Wo" },
+        { title: "Team Grimoire - Rrhar’il (from Phigros)", url: "https://youtu.be/Hwny8gQRYZA" },
+        { title: "Cheetah Mobile - Neon (from Rolling Sky)", url: "https://youtu.be/pJIh0KPl98s" },
+        { title: "Dimrain47 - At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A" },
+        { title: "cYsmix - Peer Gynt (unofficial)", url: "https://youtu.be/w4dLTLW6dJ0" },
+        { title: "USAO & Camellia - Möbius (from WACCA Reverse)", url: "https://youtu.be/2fsZdfixj60" },
+        { title: "Antistar feat. Ctymax - Class Memories (unofficial)", url: "https://youtu.be/3Ka6yPBCs5A" },
+        { title: "uma vs. モリモリあつし - Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg" },
+
+        // 突然喜歡的歌
+        { title: "A-One - Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
+        { title: "上海アリス幻樂団 - 偶像に世界を委ねて　〜 Idoratrize World (from 東方鬼形獣)", url: "https://youtu.be/7DF5wIPlvq0" },
+        { title: "101 202 404 - 小悪魔×3の大脫走！？ (from Cytus II, unofficial)", url: "https://youtu.be/HCgs32kX8eQ" },
+        { title: "黒皇帝 - Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
+        { title: "黒皇帝 vs MIssionary - Deus Judicium (from Rotaeno)", url: "https://youtu.be/CZJoFLSe9Ao" },
+        { title: "seatrus - 零號車輛 (from Paradigm: Reboot)", url: "https://youtu.be/Mk0OFd9du0w" },
+        { title: "NeLiME - CODE NAME : ZERO (from Cytus)", url: "https://youtu.be/26nQsUdhBNQ" },
+        { title: "log() - SELF (from vivid/stasis)", url: "https://youtu.be/q7PXMBjTVLc" },
+        { title: "Juggernaut. - Revenant", url: "https://youtu.be/Oa9K-tWrMIU" },
+        { title: "Ayatsugu_Revolved - 100sec Cat Dreams (from Cytus II, unofficial)", url: "https://youtu.be/zBlmtNKgrk0" }
+    ];
+
+    if (songs.length === 0) {
+        var container = document.getElementById("dailySongContainer");
+        if (container) {
+            container.innerHTML = "<p>（這裡還沒有歌曲呢QwQ）</p>";
+        }
+        return;
+    }
+
+    function getDailySeed() {
+        var today = new Date();
+        var dateString = today.getFullYear() + "-" + 
+                        String(today.getMonth() + 1).padStart(2, "0") + "-" + 
+                        String(today.getDate()).padStart(2, "0");
+        var hash = 0;
+        for (var i = 0; i < dateString.length; i++) {
+            var char = dateString.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash);
+    }
+
+    function selectDailySong() {
+        var seed = getDailySeed();
+        var index = seed % songs.length;
+        return songs[index];
+    }
+
+    var dailySong = selectDailySong();
+    var linkEl = document.getElementById("dailySongLink");
+    
+    if (linkEl && dailySong) {
+        linkEl.href = dailySong.url;
+        linkEl.textContent = dailySong.title;
+    }
+})();
