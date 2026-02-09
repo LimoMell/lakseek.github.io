@@ -146,6 +146,108 @@
     };
 })();
 
+// 圖片查看器
+(function () {
+    var overlay = null;
+    var imgEl = null;
+    var captionEl = null;
+    var downloadLink = null;
+    var closeBtn = null;
+    var lastActiveElement = null;
+
+    function ensureElements() {
+        if (overlay) return overlay;
+
+        overlay = document.createElement("div");
+        overlay.className = "image-viewer-overlay";
+
+        var panel = document.createElement("div");
+        panel.className = "image-viewer";
+
+        imgEl = document.createElement("img");
+        imgEl.className = "image-viewer-img";
+        imgEl.alt = "";
+
+        captionEl = document.createElement("div");
+        captionEl.className = "image-viewer-caption";
+
+        var actions = document.createElement("div");
+        actions.className = "image-viewer-actions";
+
+        downloadLink = document.createElement("a");
+        downloadLink.className = "image-viewer-button";
+        downloadLink.textContent = "下載原圖";
+        downloadLink.setAttribute("download", "");
+
+        closeBtn = document.createElement("button");
+        closeBtn.type = "button";
+        closeBtn.className = "image-viewer-button image-viewer-close";
+        closeBtn.textContent = "關閉";
+
+        actions.appendChild(downloadLink);
+        actions.appendChild(closeBtn);
+
+        panel.appendChild(imgEl);
+        panel.appendChild(captionEl);
+        panel.appendChild(actions);
+        overlay.appendChild(panel);
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", function (e) {
+            if (e.target === overlay) {
+                closeViewer();
+            }
+        });
+
+        closeBtn.addEventListener("click", function () {
+            closeViewer();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && overlay && overlay.classList.contains("image-viewer-visible")) {
+                closeViewer();
+            }
+        });
+
+        return overlay;
+    }
+
+    function closeViewer() {
+        if (!overlay) return;
+        overlay.classList.remove("image-viewer-visible");
+        document.documentElement.style.overflow = "";
+        if (lastActiveElement && typeof lastActiveElement.focus === "function") {
+            lastActiveElement.focus();
+        }
+        lastActiveElement = null;
+    }
+
+    function openViewer(options) {
+        if (!options || !options.src) return;
+        ensureElements();
+
+        lastActiveElement = document.activeElement;
+
+        imgEl.src = options.src;
+        imgEl.alt = options.alt || "";
+
+        captionEl.textContent = options.caption || options.alt || "";
+
+        downloadLink.href = options.downloadHref || options.src;
+        if (options.downloadName) {
+            downloadLink.setAttribute("download", options.downloadName);
+        } else {
+            downloadLink.setAttribute("download", "");
+        }
+
+        overlay.classList.add("image-viewer-visible");
+        document.documentElement.style.overflow = "hidden";
+        closeBtn.focus();
+    }
+
+    window.openImageViewer = openViewer;
+})();
+
 // 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
     var konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA", "KeyB", "KeyA"];
@@ -181,4 +283,20 @@
             }
         });
     }
+})();
+
+// Limo OriginPic
+(function () {
+    var link = document.getElementById("fursona1OriginalLink");
+    if (!link || typeof window.openImageViewer !== "function") return;
+
+    link.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.openImageViewer({
+            src: "assets/original/fursona1.png",
+            alt: "里莫/Limo 的設定圖（原圖）",
+            caption: "里莫/Limo 的設定圖（原圖）",
+            downloadName: "limo-fursona1-original.png"
+        });
+    });
 })();
