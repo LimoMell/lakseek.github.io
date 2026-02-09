@@ -146,11 +146,6 @@
     };
 })();
 
-// 彩蛋 Toast
-function showEasterEgg() {
-    showToast("哇！別再按啦 QwQ");
-}
-
 // 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
     var konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA", "KeyB", "KeyA"];
@@ -161,7 +156,7 @@ function showEasterEgg() {
             index++;
             if (index === konami.length) {
                 index = 0;
-                showEasterEgg();
+                showToast("哇！別再按啦 QwQ");
             }
         } else {
             index = 0;
@@ -182,7 +177,7 @@ function showEasterEgg() {
             resetTimer = setTimeout(function () { count = 0; }, 1500);
             if (count >= 6) {
                 count = 0;
-                showEasterEgg();
+                showToast("哇！別再按啦 QwQ");
             }
         });
     }
