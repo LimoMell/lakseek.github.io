@@ -266,9 +266,9 @@
     });
 })();
 
-// 彩蛋觸發：點擊設定圖 6 次
+// 彩蛋觸發：點擊 logo 6 次
 (function () {
-    var fursona = document.getElementById("fursona1");
+    var fursona = document.getElementById("themeToggleEgg");
     var count = 0;
     var resetTimer = null;
 
@@ -294,7 +294,7 @@
         e.preventDefault();
         window.openImageViewer({
             src: "assets/original/fursona1.png",
-            alt: "里莫/Limo 的設定圖（原圖）",
+            alt: "limoOriginPic",
             caption: "里莫/Limo 的設定圖（原圖）",
             downloadName: "limo-fursona1-original.png"
         });
