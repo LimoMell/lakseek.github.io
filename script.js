@@ -332,7 +332,7 @@
 
         // 突然喜歡的歌
         /* 24 */ { title: "A-One - Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
-        /* 25 */ { title: "上海アリス幻樂団 - 偶像に世界を委ねて　〜 Idoratrize World (from 東方鬼形獣)", url: "https://youtu.be/7DF5wIPlvq0" },
+        /* 25 */ { title: "上海アリス幻樂団 - 偶像に世界を委ねて　〜 Idoratrize World (from 東方鬼形獣 〜 Wily Beast and Weakest Creature.)", url: "https://youtu.be/7DF5wIPlvq0" },
         /* 26 */ { title: "101 202 404 - 小悪魔×3の大脫走！？ (from Cytus II, unofficial)", url: "https://youtu.be/HCgs32kX8eQ" },
         /* 27 */ { title: "黒皇帝 - Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
         /* 28 */ { title: "黒皇帝 vs MIssionary - Deus Judicium (from Rotaeno)", url: "https://youtu.be/CZJoFLSe9Ao" },
@@ -350,7 +350,8 @@
         /* 40 */ { title: "Apo11o program - Re:The END -再- (from Cytus II)", url: "https://youtu.be/gnt9Bnei2is" },
         /* 41 */ { title: 'NOMA w/ Apo11o"ALGIEBA"program - LAST Re;SØRT (from RAVON)', url: "https://youtu.be/2a0wyR-Hu1Y" },
         /* 42 */ { title: "Tobu - Higher", url: "https://youtu.be/blA7epJJaR4" },
-        /* 43 */ { title: "ユリイ・カノン - スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" }
+        /* 43 */ { title: "ユリイ・カノン - スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
+        /* 44 */ { title: "上海アリス幻樂団 - 平安のエイリアン (from 東方星蓮船 〜 Undefined Fantastic Object., unofficial)", url: "https://youtu.be/1fwZxZIb2uE" }
     ];
 
     if (songs.length === 0) {
