@@ -1,86 +1,68 @@
 // 深色/淺色模式切換
 (function () {
-    const storageKey = "theme-preference";
-    const html = document.documentElement;
-    const toggleBtn = document.getElementById("themeToggle");
-    const logo = document.querySelector(".top .logo");
-    const toggleIcon = document.getElementById("themeToggleIcon");
-
-    const logoFor = {
-        light: "assets/icon/lmLogo.png",
-        dark: "assets/icon/lmLogo.png",
-    };
-
-    const iconFor = {
+    const STORAGE_KEY = "theme-preference";
+    const THEMES = { light: "light", dark: "dark" };
+    const ICONS = {
         light: "assets/icon/lightTheme.png",
         dark: "assets/icon/darkTheme.png",
     };
 
-    const media = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+    const html = document.documentElement;
+    const toggleBtn = document.getElementById("themeToggle");
+    const logo = document.querySelector(".top .logo");
+    const toggleIcon = document.getElementById("themeToggleIcon");
+    const mediaQuery = window.matchMedia?.("(prefers-color-scheme: dark)");
 
-    function getStoredPreference() {
+    const isValidTheme = (theme) => theme === THEMES.light || theme === THEMES.dark;
+
+    const getStoredPreference = () => {
         try {
-            const v = localStorage.getItem(storageKey);
-            return v === "light" || v === "dark" ? v : null;
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return isValidTheme(stored) ? stored : null;
         } catch {
             return null;
         }
-    }
+    };
 
-    function storePreference(value) {
+    const storePreference = (theme) => {
         try {
-            if (value === "light" || value === "dark") {
-                localStorage.setItem(storageKey, value);
+            if (isValidTheme(theme)) {
+                localStorage.setItem(STORAGE_KEY, theme);
             } else {
-                localStorage.removeItem(storageKey);
+                localStorage.removeItem(STORAGE_KEY);
             }
         } catch {
-            // ignore
+            // 無視燈
         }
-    }
+    };
 
-    function getEffectiveTheme(pref) {
-        if (pref === "light" || pref === "dark") return pref;
-        return media && media.matches ? "dark" : "light";
-    }
+    const getEffectiveTheme = (pref) =>
+        isValidTheme(pref) ? pref : (mediaQuery?.matches ? THEMES.dark : THEMES.light);
 
-    function render(pref) {
+    const toggleTheme = () => {
+        const effective = getEffectiveTheme(pref);
+        pref = effective === THEMES.dark ? THEMES.light : THEMES.dark;
+        storePreference(pref);
+        render(pref);
+    };
+
+    const render = (pref) => {
         const effective = getEffectiveTheme(pref);
         html.setAttribute("data-theme", effective);
-
-        if (logo) {
-            logo.src = logoFor[effective] || logoFor.light;
-        }
-
         if (toggleIcon) {
-            toggleIcon.src = iconFor[effective] || iconFor.light;
+            toggleIcon.src = ICONS[effective];
         }
-    }
-
-    function nextPrefFromEffective(effective) {
-        return effective === "dark" ? "light" : "dark";
-    }
+    };
 
     let pref = getStoredPreference();
     render(pref);
 
     if (toggleBtn) {
-        toggleBtn.addEventListener("click", function () {
-            const effective = getEffectiveTheme(pref);
-            pref = nextPrefFromEffective(effective);
-            storePreference(pref);
-            render(pref);
-        });
+        toggleBtn.addEventListener("click", toggleTheme);
     }
 
-    if (media && typeof media.addEventListener === "function") {
-        media.addEventListener("change", function () {
-            pref = null;
-            storePreference(null);
-            render(pref);
-        });
-    } else if (media && typeof media.addListener === "function") {
-        media.addListener(function () {
+    if (mediaQuery) {
+        mediaQuery.addEventListener?.("change", () => {
             pref = null;
             storePreference(null);
             render(pref);
@@ -90,45 +72,48 @@
 
 // Toast 訊息
 (function () {
-    var activeToasts = [];
-    var toastContainer = null;
+    const TOAST_OFFSET_STEP = 4; // 3.5rem + 0.5rem
+    const TOAST_BASE_BOTTOM = 3; // rem
+    const TOAST_REMOVE_DELAY = 400; // ms
+    const DEFAULT_DURATION = 2200; // ms
 
-    function initToastContainer() {
-        if (!toastContainer) {
-            toastContainer = document.createElement("div");
-            toastContainer.className = "toast-container";
-            toastContainer.setAttribute("aria-live", "polite");
-            toastContainer.setAttribute("aria-atomic", "false");
-            document.body.appendChild(toastContainer);
-        }
+    let activeToasts = [];
+    let toastContainer = null;
+
+    const initToastContainer = () => {
+        if (toastContainer) return toastContainer;
+
+        toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container";
+        toastContainer.setAttribute("aria-live", "polite");
+        toastContainer.setAttribute("aria-atomic", "false");
+        document.body.appendChild(toastContainer);
         return toastContainer;
-    }
+    };
 
-    function updateToastPositions() {
-        activeToasts.forEach(function (toast, index) {
-            var offset = index * (3.5 + 0.5);
-            toast.style.bottom = (3 + offset) + "rem";
+    const updateToastPositions = () => {
+        activeToasts.forEach((toast, index) => {
+            toast.style.bottom = `${TOAST_BASE_BOTTOM + index * TOAST_OFFSET_STEP}rem`;
         });
-    }
+    };
 
-    function removeToast(toast) {
-        var index = activeToasts.indexOf(toast);
-        if (index > -1) {
-            activeToasts.splice(index, 1);
-            toast.classList.remove("toast-visible");
-            setTimeout(function () {
-                toast.remove();
-                updateToastPositions();
-            }, 400);
-        }
-    }
+    const removeToast = (toast) => {
+        const index = activeToasts.indexOf(toast);
+        if (index === -1) return;
 
-    window.showToast = function (message, duration) {
-        if (typeof message !== "string" || message.length === 0) return;
-        duration = duration || 2200;
+        activeToasts.splice(index, 1);
+        toast.classList.remove("toast-visible");
+        setTimeout(() => {
+            toast.remove();
+            updateToastPositions();
+        }, TOAST_REMOVE_DELAY);
+    };
 
-        var container = initToastContainer();
-        var toast = document.createElement("div");
+    window.showToast = (message, duration = DEFAULT_DURATION) => {
+        if (typeof message !== "string" || !message.trim()) return;
+
+        const container = initToastContainer();
+        const toast = document.createElement("div");
         toast.className = "toast";
         toast.setAttribute("role", "status");
         toast.textContent = message;
@@ -140,28 +125,27 @@
         toast.offsetHeight;
         toast.classList.add("toast-visible");
 
-        setTimeout(function () {
-            removeToast(toast);
-        }, duration);
+        setTimeout(() => removeToast(toast), duration);
     };
 })();
 
 // 圖片查看器
 (function () {
-    var overlay = null;
-    var imgEl = null;
-    var captionEl = null;
-    var downloadLink = null;
-    var closeBtn = null;
-    var lastActiveElement = null;
+    const html = document.documentElement;
+    let overlay = null;
+    let imgEl = null;
+    let captionEl = null;
+    let downloadLink = null;
+    let closeBtn = null;
+    let lastActiveElement = null;
 
-    function ensureElements() {
+    const ensureElements = () => {
         if (overlay) return overlay;
 
         overlay = document.createElement("div");
         overlay.className = "image-viewer-overlay";
 
-        var panel = document.createElement("div");
+        const panel = document.createElement("div");
         panel.className = "image-viewer";
 
         imgEl = document.createElement("img");
@@ -171,7 +155,7 @@
         captionEl = document.createElement("div");
         captionEl.className = "image-viewer-caption";
 
-        var actions = document.createElement("div");
+        const actions = document.createElement("div");
         actions.className = "image-viewer-actions";
 
         downloadLink = document.createElement("a");
@@ -186,77 +170,73 @@
 
         actions.appendChild(downloadLink);
         actions.appendChild(closeBtn);
-
         panel.appendChild(imgEl);
         panel.appendChild(captionEl);
         panel.appendChild(actions);
         overlay.appendChild(panel);
         document.body.appendChild(overlay);
 
-        overlay.addEventListener("click", function (e) {
-            if (e.target === overlay) {
-                closeViewer();
-            }
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) closeViewer();
         });
 
-        closeBtn.addEventListener("click", function () {
-            closeViewer();
-        });
+        closeBtn.addEventListener("click", closeViewer);
 
-        document.addEventListener("keydown", function (e) {
-            if (e.key === "Escape" && overlay && overlay.classList.contains("image-viewer-visible")) {
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && overlay?.classList.contains("image-viewer-visible")) {
                 closeViewer();
             }
         });
 
         return overlay;
-    }
+    };
 
-    function closeViewer() {
+    const closeViewer = () => {
         if (!overlay) return;
         overlay.classList.remove("image-viewer-visible");
-        document.documentElement.style.overflow = "";
-        if (lastActiveElement && typeof lastActiveElement.focus === "function") {
-            lastActiveElement.focus();
-        }
+        html.classList.remove("image-viewer-open");
+        lastActiveElement?.focus?.();
         lastActiveElement = null;
-    }
+    };
 
-    function openViewer(options) {
-        if (!options || !options.src) return;
+    const openViewer = (options) => {
+        if (!options?.src) return;
         ensureElements();
 
         lastActiveElement = document.activeElement;
-
         imgEl.src = options.src;
         imgEl.alt = options.alt || "";
-
         captionEl.textContent = options.caption || options.alt || "";
-
         downloadLink.href = options.downloadHref || options.src;
+
         if (options.downloadName) {
             downloadLink.setAttribute("download", options.downloadName);
         } else {
-            downloadLink.setAttribute("download", "");
+            downloadLink.removeAttribute("download");
         }
 
         overlay.classList.add("image-viewer-visible");
-        document.documentElement.style.overflow = "hidden";
+        html.classList.add("image-viewer-open");
         closeBtn.focus();
-    }
+    };
 
     window.openImageViewer = openViewer;
 })();
 
 // 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
-    var konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA", "KeyB", "KeyA"];
-    var index = 0;
+    const KONAMI_CODE = [
+        "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+        "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+        "KeyB", "KeyA", "KeyB", "KeyA"
+    ];
 
-    document.addEventListener("keydown", function (e) {
-        if (e.code === konami[index]) {
+    let index = 0;
+
+    document.addEventListener("keydown", (e) => {
+        if (e.code === KONAMI_CODE[index]) {
             index++;
-            if (index === konami.length) {
+            if (index === KONAMI_CODE.length) {
                 index = 0;
                 showToast("你在期待些什麼呢owo");
             }
@@ -268,29 +248,34 @@
 
 // 彩蛋觸發：切換深色/淺色模式 6 次
 (function () {
-    var fursona = document.getElementById("themeToggleEgg");
-    var count = 0;
-    var resetTimer = null;
+    const THRESHOLD = 6;
+    const RESET_DELAY = 1500;
+    const fursona = document.getElementById("themeToggleEgg");
 
-    if (fursona) {
-        fursona.addEventListener("click", function () {
-            count++;
-            clearTimeout(resetTimer);
-            resetTimer = setTimeout(function () { count = 0; }, 1500);
-            if (count >= 6) {
-                count = 0;
-                showToast("哇！別再按啦 QwQ");
-            }
-        });
-    }
+    if (!fursona) return;
+
+    let count = 0;
+    let resetTimer = null;
+
+    fursona.addEventListener("click", () => {
+        count++;
+        clearTimeout(resetTimer);
+
+        if (count >= THRESHOLD) {
+            count = 0;
+            showToast("哇！別再按啦 QwQ");
+        } else {
+            resetTimer = setTimeout(() => { count = 0; }, RESET_DELAY);
+        }
+    });
 })();
 
 // Limo OriginPic
 (function () {
-    var link = document.getElementById("fursona1OriginPic");
-    if (!link || typeof window.openImageViewer !== "function") return;
+    const link = document.getElementById("fursona1OriginPic");
+    if (!link || !window.openImageViewer) return;
 
-    link.addEventListener("click", function (e) {
+    link.addEventListener("click", (e) => {
         e.preventDefault();
         window.openImageViewer({
             src: "assets/original/fursona1.png",
@@ -303,98 +288,119 @@
 
 // 每日隨機歌曲
 (function () {
-    var songs = [
+    const songs = [
         // MSTP
-        /* 0 */ { title: "C418 - Alpha (from Minecraft)", url: "https://youtu.be/q6o7qpPHd7g" },
-        /* 1 */ { title: "KIVΛ, Ice - ͟͝͞Ⅱ́̕ (from Cytus II)", url: "https://youtu.be/H2k7TMT3ouA" },
-        /* 2 */ { title: "KIVΛ - The Whole Rest (from Cytus II)", url: "https://youtu.be/TWqMQeVqqnA"},
-        /* 3 */ { title: "Theatrum Aeternum - acta est fabula, plaudite (from vivid/stasis)", url: "https://youtu.be/TPTsSu77MKI" },
-        /* 4 */ { title: "eicateve - R.I.P.", url: "https://youtu.be/QJakdR6FWdg" },
-        /* 5 */ { title: "Poppin'Party - Returns (from BanG Dream!)", url: "https://youtu.be/zWKV5yudE18" },
-        /* 6 */ { title: "ryo (supercell) - ODDS&ENDS (unofficial)", url: "https://youtu.be/HUzLUGKwQJc" },
-        /* 7 */ { title: "Ice - L", url: "https://youtu.be/ZXy_1LA-RlA" },
-        /* 8 */ { title: "Ice - L2 -Ascension- (Act 1) (unofficial)", url: "https://youtu.be/lAkUpYCUXCU" },
-        /* 9 */ { title: "Ice - L2 -Ascension- (Act 2) (unofficial)", url: "https://youtu.be/8nF7MU5iGng" },
-        /* 10 */ { title: "Toby Fox - MEGALOVANIA (from UNDERTALE)", url: "https://youtu.be/KK3KXAECte4" },
-        /* 11 */ { title: "ああああ - トゥルエンド (from でびるコネクショん)", url: "https://youtu.be/hK7Inl9Rark" },
-        /* 12 */ { title: "Sta - Incyde (from Cytus II)", url: "https://youtu.be/-1OiVXRGE-U" },
-        /* 13 */ { title: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ - paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0" },
-        /* 14 */ { title: "Knighthood - Super Universe (Knighthood Remix) (unofficial)", url: "https://youtu.be/v7rqB-o52tE" },
-        /* 15 */ { title: "technoplanet - XYZ (from Cytus II)", url: "https://youtu.be/ZYXFo637GNc" },
-        /* 16 */ { title: "Team Grimoire - Grievous Lady (from Arcaea)", url: "https://youtu.be/QXeaLw2s-Wo" },
-        /* 17 */ { title: "Team Grimoire - Rrhar’il (from Phigros)", url: "https://youtu.be/Hwny8gQRYZA" },
-        /* 18 */ { title: "Cheetah Mobile - Neon (from Rolling Sky)", url: "https://youtu.be/pJIh0KPl98s" },
-        /* 19 */ { title: "Dimrain47 - At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A" },
-        /* 20 */ { title: "cYsmix - Peer Gynt (unofficial)", url: "https://youtu.be/w4dLTLW6dJ0" },
-        /* 21 */ { title: "USAO & Camellia - Möbius (from WACCA Reverse)", url: "https://youtu.be/2fsZdfixj60" },
-        /* 22 */ { title: "Antistar feat. Ctymax - Class Memories (unofficial)", url: "https://youtu.be/3Ka6yPBCs5A" },
-        /* 23 */ { title: "uma vs. モリモリあつし - Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg" },
+        /* 0 */ { artist: "C418", title: "Alpha", url: "https://youtu.be/q6o7qpPHd7g", from: "Minecraft" },
+        /* 1 */ { artist: "KIVΛ, Ice", title: "͟͝͞Ⅱ́̕", url: "https://youtu.be/H2k7TMT3ouA", from: "Cytus II" },
+        /* 2 */ { artist: "KIVΛ", title: "The Whole Rest", url: "https://youtu.be/TWqMQeVqqnA", from: "Cytus II" },
+        /* 3 */ { artist: "Theatrum Aeternum", title: "acta est fabula, plaudite", url: "https://youtu.be/TPTsSu77MKI", from: "vivid/stasis" },
+        /* 4 */ { artist: "eicateve", title: "R.I.P.", url: "https://youtu.be/QJakdR6FWdg" },
+        /* 5 */ { artist: "Poppin'Party", title: "Returns", url: "https://youtu.be/zWKV5yudE18", from: "BanG Dream!" },
+        /* 6 */ { artist: "ryo (supercell)", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", unofficial: true },
+        /* 7 */ { artist: "Ice", title: "L", url: "https://youtu.be/ZXy_1LA-RlA" },
+        /* 8 */ { artist: "Ice", title: "L2 -Ascension- (Act 1)", url: "https://youtu.be/lAkUpYCUXCU", unofficial: true },
+        /* 9 */ { artist: "Ice", title: "L2 -Ascension- (Act 2)", url: "https://youtu.be/8nF7MU5iGng", unofficial: true },
+        /* 10 */ { artist: "Toby Fox", title: "MEGALOVANIA", url: "https://youtu.be/KK3KXAECte4", from: "UNDERTALE" },
+        /* 11 */ { artist: "ああああ", title: "トゥルエンド", url: "https://youtu.be/hK7Inl9Rark", from: "でびるコネクショん" },
+        /* 12 */ { artist: "Sta", title: "Incyde", url: "https://youtu.be/-1OiVXRGE-U", from: "Cytus II" },
+        /* 13 */ { artist: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ", title: "paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0" },
+        /* 14 */ { artist: "Knighthood", title: "Super Universe (Knighthood Remix)", url: "https://youtu.be/v7rqB-o52tE", unofficial: true },
+        /* 15 */ { artist: "technoplanet", title: "XYZ", url: "https://youtu.be/ZYXFo637GNc", from: "Cytus II" },
+        /* 16 */ { artist: "Team Grimoire", title: "Grievous Lady", url: "https://youtu.be/QXeaLw2s-Wo", from: "Arcaea" },
+        /* 17 */ { artist: "Team Grimoire", title: "Rrhar'il", url: "https://youtu.be/Hwny8gQRYZA", from: "Phigros" },
+        /* 18 */ { artist: "Cheetah Mobile", title: "Neon", url: "https://youtu.be/pJIh0KPl98s", from: "Rolling Sky" },
+        /* 19 */ { artist: "Dimrain47", title: "At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A" },
+        /* 20 */ { artist: "cYsmix", title: "Peer Gynt", url: "https://youtu.be/w4dLTLW6dJ0", unofficial: true },
+        /* 21 */ { artist: "USAO & Camellia", title: "Möbius", url: "https://youtu.be/2fsZdfixj60", from: "WACCA Reverse" },
+        /* 22 */ { artist: "Antistar feat. Ctymax", title: "Class Memories", url: "https://youtu.be/3Ka6yPBCs5A", unofficial: true },
+        /* 23 */ { artist: "uma vs. モリモリあつし", title: "Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg" },
 
         // 突然喜歡的歌
-        /* 24 */ { title: "A-One - Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
-        /* 25 */ { title: "上海アリス幻樂団 - 偶像に世界を委ねて　〜 Idoratrize World (from 東方鬼形獣 〜 Wily Beast and Weakest Creature.)", url: "https://youtu.be/7DF5wIPlvq0" },
-        /* 26 */ { title: "101 202 404 - 小悪魔×3の大脫走！？ (from Cytus II, unofficial)", url: "https://youtu.be/HCgs32kX8eQ" },
-        /* 27 */ { title: "黒皇帝 - Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
-        /* 28 */ { title: "黒皇帝 vs MIssionary - Deus Judicium (from Rotaeno)", url: "https://youtu.be/CZJoFLSe9Ao" },
-        /* 29 */ { title: "seatrus - 零號車輛 (from Paradigm: Reboot)", url: "https://youtu.be/Mk0OFd9du0w" },
-        /* 30 */ { title: "NeLiME - CODE NAME : ZERO (from Cytus)", url: "https://youtu.be/26nQsUdhBNQ" },
-        /* 31 */ { title: "log() - SELF (from vivid/stasis)", url: "https://youtu.be/q7PXMBjTVLc" },
-        /* 32 */ { title: "Juggernaut. - Revenant", url: "https://youtu.be/Oa9K-tWrMIU" },
-        /* 33 */ { title: "Ayatsugu_Revolved - 100sec Cat Dreams (from Cytus II, unofficial)", url: "https://youtu.be/zBlmtNKgrk0" },
-        /* 34 */ { title: "It's MyGO!!!!! - 詩超絆 (from BanG Dream!)", url: "https://youtu.be/wJ-OebTVyvk" },
-        /* 35 */ { title: "Poppin'Party - Dreamers Go! (from BanG Dream!)", url: "https://youtu.be/VigNV3bsE_k" },
-        /* 36 */ { title: "ああああ - でびるコネクショん (from でびるコネクショん)", url: "https://youtu.be/aQx9OjvQZEo" },
-        /* 37 */ { title: "KIVΛ - Used to be (from Cytus II)", url: "https://youtu.be/hGaJNvkRfo0" },
-        /* 38 */ { title: "やいり - Ultimate feat. 放課後のあいつ (from Cytus II, unofficial)", url: "https://youtu.be/j-n1Ah5zXT0" },
-        /* 39 */ { title: "MELOIMAGE - Imprint (from Cytus II, unofficial)", url: "https://youtu.be/mTcFEVeVoDs" },
-        /* 40 */ { title: "Apo11o program - Re:The END -再- (from Cytus II)", url: "https://youtu.be/gnt9Bnei2is" },
-        /* 41 */ { title: 'NOMA w/ Apo11o"ALGIEBA"program - LAST Re;SØRT (from RAVON)', url: "https://youtu.be/2a0wyR-Hu1Y" },
-        /* 42 */ { title: "Tobu - Higher", url: "https://youtu.be/blA7epJJaR4" },
-        /* 43 */ { title: "ユリイ・カノン - スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
-        /* 44 */ { title: "上海アリス幻樂団 - 平安のエイリアン (from 東方星蓮船 〜 Undefined Fantastic Object., unofficial)", url: "https://youtu.be/1fwZxZIb2uE" }
+        /* 24 */ { artist: "A-One", title: "Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
+        /* 25 */ { artist: "上海アリス幻楽団", title: "偶像に世界を委ねて　〜 Idolatrize World", url: "https://youtu.be/7DF5wIPlvq0", from: "東方鬻形獸 〜 Wily Beast and Weakest Creature." },
+        /* 26 */ { artist: "101 202 404", title: "小悪魔×3の大脻走！？", url: "https://youtu.be/HCgs32kX8eQ", from: "Cytus II", unofficial: true },
+        /* 27 */ { artist: "黒皇帝", title: "Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
+        /* 28 */ { artist: "黒皇帝 vs MIssionary", title: "Deus Judicium", url: "https://youtu.be/CZJoFLSe9Ao", from: "Rotaeno" },
+        /* 29 */ { artist: "seatrus", title: "零訫車輛", url: "https://youtu.be/Mk0OFd9du0w", from: "Paradigm: Reboot" },
+        /* 30 */ { artist: "NeLiME", title: "CODE NAME : ZERO", url: "https://youtu.be/26nQsUdhBNQ", from: "Cytus" },
+        /* 31 */ { artist: "log()", title: "SELF", url: "https://youtu.be/q7PXMBjTVLc", from: "vivid/stasis" },
+        /* 32 */ { artist: "Juggernaut.", title: "Revenant", url: "https://youtu.be/Oa9K-tWrMIU" },
+        /* 33 */ { artist: "Ayatsugu_Revolved", title: "100sec Cat Dreams", url: "https://youtu.be/zBlmtNKgrk0", from: "Cytus II", unofficial: true },
+        /* 34 */ { artist: "It's MyGO!!!!!", title: "詩超絶", url: "https://youtu.be/wJ-OebTVyvk", from: "BanG Dream!" },
+        /* 35 */ { artist: "Poppin'Party", title: "Dreamers Go!", url: "https://youtu.be/VigNV3bsE_k", from: "BanG Dream!" },
+        /* 36 */ { artist: "ああああ", title: "でびるコネクショん", url: "https://youtu.be/aQx9OjvQZEo", from: "でびるコネクショん" },
+        /* 37 */ { artist: "KIVΛ", title: "Used to be", url: "https://youtu.be/hGaJNvkRfo0", from: "Cytus II" },
+        /* 38 */ { artist: "やいり", title: "Ultimate feat. 放課後のあいつ", url: "https://youtu.be/j-n1Ah5zXT0", from: "Cytus II", unofficial: true },
+        /* 39 */ { artist: "MELOIMAGE", title: "Imprint", url: "https://youtu.be/mTcFEVeVoDs", from: "Cytus II", unofficial: true },
+        /* 40 */ { artist: "Apo11o program", title: "Re:The END -再-", url: "https://youtu.be/gnt9Bnei2is", from: "Cytus II" },
+        /* 41 */ { artist: 'NOMA w/ Apo11o"ALGIEBA"program', title: "LAST Re;SØRT", url: "https://youtu.be/2a0wyR-Hu1Y", from: "RAVON" },
+        /* 42 */ { artist: "Tobu", title: "Higher", url: "https://youtu.be/blA7epJJaR4" },
+        /* 43 */ { artist: "ユリイ・カノン", title: "スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
+        /* 44 */ { artist: "上海アリス幻樂団", title: "平安のエイリアン", url: "https://youtu.be/1fwZxZIb2uE", from: "東方星蓮船 〜 Undefined Fantastic Object.", unofficial: true }
     ];
 
     if (songs.length === 0) {
-        var container = document.getElementById("dailySongContainer");
+        const container = document.getElementById("dailySongContainer");
         if (container) {
             container.innerHTML = "<p>（這裡還沒有歌曲呢QwQ）</p>";
         }
         return;
     }
 
-    function getDailySeed() {
-        var today = new Date();
-        var dateString = today.getFullYear() + "-" + 
-                        String(today.getMonth() + 1).padStart(2, "0") + "-" + 
-                        String(today.getDate()).padStart(2, "0");
-        var hash = 0;
-        for (var i = 0; i < dateString.length; i++) {
-            var char = dateString.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
+    const getDailySeed = () => {
+        const today = new Date();
+        const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+        let hash = 0;
+        for (let i = 0; i < dateString.length; i++) {
+            hash = ((hash << 5) - hash) + dateString.charCodeAt(i);
             hash = hash & hash;
         }
         return Math.abs(hash);
-    }
+    };
 
-    function selectDailySong() {
-        var params = new URLSearchParams(window.location.search);
-        var specified = params.get("dailySong");
+    const selectDailySong = () => {
+        const params = new URLSearchParams(window.location.search);
+        const specified = params.get("dailySong");
+
         if (specified !== null) {
-            var index = parseInt(specified, 10);
+            const index = parseInt(specified, 10);
             if (!isNaN(index) && index >= 0 && index < songs.length) {
                 return songs[index];
             }
         }
-        var seed = getDailySeed();
-        var index = seed % songs.length;
-        return songs[index];
-    }
 
-    var dailySong = selectDailySong();
-    var linkEl = document.getElementById("dailySongLink");
+        const seed = getDailySeed();
+        return songs[seed % songs.length];
+    };
 
-    if (linkEl && dailySong) {
-        linkEl.href = dailySong.url;
-        linkEl.textContent = dailySong.title;
-    }
+    const renderSongInfo = (dailySong) => {
+        const container = document.getElementById("dailySongContainer");
+        if (!container || !dailySong) return;
+
+        container.innerHTML = "";
+
+        const titleLink = document.createElement("a");
+        titleLink.href = dailySong.url;
+        titleLink.target = "_blank";
+        titleLink.rel = "noopener noreferrer";
+        titleLink.textContent = dailySong.unofficial ? `${dailySong.title} (unofficial)` : dailySong.title;
+        container.appendChild(titleLink);
+
+        container.appendChild(document.createElement("br"));
+
+        const artistDiv = document.createElement("p");
+        artistDiv.style.margin = "0.3em 0";
+        artistDiv.textContent = `作曲: ${dailySong.artist}`;
+        container.appendChild(artistDiv);
+
+        if (dailySong.from) {
+            const fromDiv = document.createElement("p");
+            fromDiv.style.margin = "0.3em 0";
+            fromDiv.textContent = `來自: ${dailySong.from}`;
+            container.appendChild(fromDiv);
+        }
+    };
+
+    const dailySong = selectDailySong();
+    renderSongInfo(dailySong);
 })();
