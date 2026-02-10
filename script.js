@@ -349,7 +349,8 @@
         /* 39 */ { title: "MELOIMAGE - Imprint (from Cytus II, unofficial)", url: "https://youtu.be/mTcFEVeVoDs" },
         /* 40 */ { title: "Apo11o program - Re:The END -再- (from Cytus II)", url: "https://youtu.be/gnt9Bnei2is" },
         /* 41 */ { title: 'NOMA w/ Apo11o"ALGIEBA"program - LAST Re;SØRT (from RAVON)', url: "https://youtu.be/2a0wyR-Hu1Y" },
-        /* 41 */ { title: "Tobu - Higher", url: "https://youtu.be/blA7epJJaR4" }
+        /* 42 */ { title: "Tobu - Higher", url: "https://youtu.be/blA7epJJaR4" },
+        /* 43 */ { title: "ユリイ・カノン - スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" }
     ];
 
     if (songs.length === 0) {
