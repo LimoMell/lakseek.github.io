@@ -336,7 +336,21 @@
         /* 41 */ { artist: 'NOMA w/ Apo11o"ALGIEBA"program', title: "LAST Re;SØRT", url: "https://youtu.be/2a0wyR-Hu1Y", from: "RAVON" },
         /* 42 */ { artist: "Tobu", title: "Higher", url: "https://youtu.be/blA7epJJaR4" },
         /* 43 */ { artist: "ユリイ・カノン", title: "スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
-        /* 44 */ { artist: "上海アリス幻樂団", title: "平安のエイリアン", url: "https://youtu.be/1fwZxZIb2uE", from: "東方星蓮船 〜 Undefined Fantastic Object.", unofficial: true }
+        /* 44 */ { artist: "上海アリス幻樂団", title: "平安のエイリアン", url: "https://youtu.be/1fwZxZIb2uE", from: "東方星蓮船 〜 Undefined Fantastic Object.", unofficial: true },
+        /* 45 */ { artist: "Roselia", title: "Neo-Aspect", url: "https://youtu.be/03iVXFZ8jrs", from: "BanG Dream!" },
+        /* 46 */ { artist: "RAISE A SUILEN", title: "DEAD HEAT BEAT", url: "https://youtu.be/2gJfjLGCf9U", from: "BanG Dream!" },
+        /* 47 */ { artist: "DECO*27", title: "ヴァンパイア", url: "https://youtu.be/e1xCOsgWG0M" },
+        /* 48 */ { artist: "溝口ゆうま feat. 大瀬良あい", title: "Nídhögg", url: "https://youtu.be/3w6I9Ye304o", from: "Cytus II" },
+        /* 49 */ { artist: "Tsukasa", title: "Stardust Sphere", url: "https://youtu.be/f9XYU172ImI", from: "Cytus" },
+        /* 50 */ { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II" },
+        /* 51 */ { artist: "DJ Myosuke & Gram & t+pazolite", title: "Σ", url: "https://youtu.be/qbQHPdTLX40" },
+        /* 52 */ { artist: "Y&Co.", title: "Daisuke", url: "https://youtu.be/T9rMDOkPiRY", unofficial: true },
+        /* 53 */ { artist: "BlackY VS Yooh VS siromaru VS xi VS モリモリあつし", title: "創 -汝ら新世界へ歩む者なり-", url: "https://youtu.be/kLs6UW43MsQ", from: "CHUNITHM" },
+        /* 54 */ { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす" },
+        /* 55 */ { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす" },
+        /* 56 */ { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん" }
+
+        /* { artist: "", title: "", url: "", from: "", unofficial: trueOr } */
     ];
 
     if (songs.length === 0) {
@@ -390,13 +404,13 @@
 
         const artistDiv = document.createElement("p");
         artistDiv.style.margin = "0.3em 0";
-        artistDiv.textContent = `作曲: ${dailySong.artist}`;
+        artistDiv.textContent = `作曲：${dailySong.artist}`;
         container.appendChild(artistDiv);
 
         if (dailySong.from) {
             const fromDiv = document.createElement("p");
             fromDiv.style.margin = "0.3em 0";
-            fromDiv.textContent = `來自: ${dailySong.from}`;
+            fromDiv.textContent = `來自：${dailySong.from}`;
             container.appendChild(fromDiv);
         }
     };
