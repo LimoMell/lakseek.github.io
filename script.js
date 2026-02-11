@@ -407,7 +407,9 @@
         /* 56 */ { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん" },
         /* 57 */ { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0" },
         /* 58 */ { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" },
-        /* 59 */ { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" }
+        /* 59 */ { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" },
+        /* 60 */ { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん" },
+        /* 61 */ { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" }
 
         // /* ? */ { artist: "", title: "", url: "", from: "", unofficial: trueOr }
     ];

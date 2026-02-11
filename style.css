@@ -242,7 +242,7 @@ html.image-viewer-open {
     display: none;
     text-align: center;
     padding: 2rem 1rem;
-    font-size: 1rem;
+    font: inherit;
     opacity: 0.7;
     align-items: center;
     justify-content: center;
