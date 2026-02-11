@@ -139,12 +139,17 @@
     let closeBtn = null;
     let loadingEl = null;
     let lastActiveElement = null;
+    let loadingTimeout = null;
+    let keydownListener = null;
 
     const ensureElements = () => {
         if (overlay) return overlay;
 
         overlay = document.createElement("div");
         overlay.className = "image-viewer-overlay";
+        overlay.setAttribute("role", "dialog");
+        overlay.setAttribute("aria-modal", "true");
+        overlay.setAttribute("aria-label", "圖片查看器");
 
         const panel = document.createElement("div");
         panel.className = "image-viewer";
@@ -155,7 +160,20 @@
 
         loadingEl = document.createElement("div");
         loadingEl.className = "image-viewer-loading";
-        loadingEl.textContent = "載入中...";
+        loadingEl.setAttribute("role", "status");
+        loadingEl.setAttribute("aria-live", "polite");
+        
+        const spinner = document.createElement("div");
+        spinner.className = "image-viewer-spinner";
+        const spinnerDot = document.createElement("span");
+        spinnerDot.className = "image-viewer-spinner-dot";
+        spinner.appendChild(spinnerDot);
+        
+        const loadingText = document.createElement("p");
+        loadingText.className = "image-viewer-loading-text";
+        loadingText.textContent = "載入中...";
+        loadingEl.appendChild(spinner);
+        loadingEl.appendChild(loadingText);
 
         captionEl = document.createElement("div");
         captionEl.className = "image-viewer-caption";
@@ -172,6 +190,7 @@
         closeBtn.type = "button";
         closeBtn.className = "image-viewer-button image-viewer-close";
         closeBtn.textContent = "關閉";
+        closeBtn.setAttribute("aria-label", "關閉圖片查看器");
 
         actions.appendChild(downloadLink);
         actions.appendChild(closeBtn);
@@ -184,21 +203,28 @@
 
         overlay.addEventListener("click", (e) => {
             if (e.target === overlay) closeViewer();
-        });
+        }, { passive: true });
 
         closeBtn.addEventListener("click", closeViewer);
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && overlay?.classList.contains("image-viewer-visible")) {
-                closeViewer();
-            }
-        });
 
         return overlay;
     };
 
+    const handleKeyPress = (e) => {
+        if (!overlay?.classList.contains("image-viewer-visible")) return;
+        
+        if (e.key === "Escape") {
+            closeViewer();
+        }
+    };
+
     const closeViewer = () => {
         if (!overlay) return;
+        clearTimeout(loadingTimeout);
+        if (keydownListener) {
+            document.removeEventListener("keydown", keydownListener);
+            keydownListener = null;
+        }
         overlay.classList.remove("image-viewer-visible");
         html.classList.remove("image-viewer-open");
         lastActiveElement?.focus?.();
@@ -209,12 +235,14 @@
         if (!options?.src) return;
         ensureElements();
 
+        clearTimeout(loadingTimeout);
         lastActiveElement = document.activeElement;
         
         imgEl.classList.add("image-viewer-img-hidden");
         loadingEl.classList.add("image-viewer-loading-visible");
         
         const handleLoad = () => {
+            clearTimeout(loadingTimeout);
             imgEl.classList.remove("image-viewer-img-hidden");
             loadingEl.classList.remove("image-viewer-loading-visible");
             imgEl.removeEventListener("load", handleLoad);
@@ -222,11 +250,17 @@
         };
         
         const handleError = () => {
+            clearTimeout(loadingTimeout);
             imgEl.classList.remove("image-viewer-img-hidden");
             loadingEl.classList.remove("image-viewer-loading-visible");
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
         };
+        
+        loadingTimeout = setTimeout(() => {
+            imgEl.classList.remove("image-viewer-img-hidden");
+            loadingEl.classList.remove("image-viewer-loading-visible");
+        }, 10000);
         
         imgEl.addEventListener("load", handleLoad);
         imgEl.addEventListener("error", handleError);
@@ -240,6 +274,11 @@
             downloadLink.setAttribute("download", options.downloadName);
         } else {
             downloadLink.removeAttribute("download");
+        }
+
+        if (!keydownListener) {
+            keydownListener = handleKeyPress;
+            document.addEventListener("keydown", keydownListener);
         }
 
         overlay.classList.add("image-viewer-visible");
