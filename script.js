@@ -307,7 +307,7 @@
     link.addEventListener("click", (e) => {
         e.preventDefault();
         window.openImageViewer({
-            src: "assets/original/fursona1.png",
+            src: "assets/characters/artworks/1-fursona-of.png",
             alt: "Limo's fursona picture",
             caption: "此圖片嚴禁用於 AI 相關應用、二次修改、未經許可轉載。",
             downloadName: "limo-fursona1-original.png"
