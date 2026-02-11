@@ -137,6 +137,7 @@
     let captionEl = null;
     let downloadLink = null;
     let closeBtn = null;
+    let loadingEl = null;
     let lastActiveElement = null;
 
     const ensureElements = () => {
@@ -151,6 +152,10 @@
         imgEl = document.createElement("img");
         imgEl.className = "image-viewer-img";
         imgEl.alt = "";
+
+        loadingEl = document.createElement("div");
+        loadingEl.className = "image-viewer-loading";
+        loadingEl.textContent = "載入中...";
 
         captionEl = document.createElement("div");
         captionEl.className = "image-viewer-caption";
@@ -171,6 +176,7 @@
         actions.appendChild(downloadLink);
         actions.appendChild(closeBtn);
         panel.appendChild(imgEl);
+        panel.appendChild(loadingEl);
         panel.appendChild(captionEl);
         panel.appendChild(actions);
         overlay.appendChild(panel);
@@ -204,6 +210,24 @@
         ensureElements();
 
         lastActiveElement = document.activeElement;
+        
+        loadingEl.classList.add("image-viewer-loading-visible");
+        
+        const handleLoad = () => {
+            loadingEl.classList.remove("image-viewer-loading-visible");
+            imgEl.removeEventListener("load", handleLoad);
+            imgEl.removeEventListener("error", handleError);
+        };
+        
+        const handleError = () => {
+            loadingEl.classList.remove("image-viewer-loading-visible");
+            imgEl.removeEventListener("load", handleLoad);
+            imgEl.removeEventListener("error", handleError);
+        };
+        
+        imgEl.addEventListener("load", handleLoad);
+        imgEl.addEventListener("error", handleError);
+        
         imgEl.src = options.src;
         imgEl.alt = options.alt || "";
         captionEl.textContent = options.caption || options.alt || "";

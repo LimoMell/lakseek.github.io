@@ -234,6 +234,20 @@ html.image-viewer-open {
     display: block;
 }
 
+.image-viewer-loading {
+    display: none;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 1rem;
+    opacity: 0.7;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-viewer-loading-visible {
+    display: flex;
+}
+
 .image-viewer-caption {
     font-size: 0.875rem;
 }
