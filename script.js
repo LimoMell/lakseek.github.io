@@ -223,6 +223,21 @@
     window.openImageViewer = openViewer;
 })();
 
+// 圖片查看器測試
+(function () {
+    const link = document.getElementById("imageViewerTest");
+    if (!link || !window.openImageViewer) return;
+
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.openImageViewer({
+            src: "assets/ProjectArchive/蜘蛛咪.gif",
+            alt: "Image Viewer Test",
+            downloadName: "test-gif.gif"
+        });
+    });
+})();
+
 // 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
     const KONAMI_CODE = [
