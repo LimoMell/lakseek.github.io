@@ -3,8 +3,8 @@
     const STORAGE_KEY = "theme-preference";
     const THEMES = { light: "light", dark: "dark" };
     const ICONS = {
-        light: "assets/icon/lightTheme.png",
-        dark: "assets/icon/darkTheme.png",
+        light: "assets/icons/light-theme.png",
+        dark: "assets/icons/dark-theme.png",
     };
 
     const html = document.documentElement;
@@ -288,10 +288,10 @@
         if (count >= THRESHOLD) {
             count = 0;
             window.openImageViewer({
-                src: "assets/egg/nyapider.gif",
+                src: "assets/easter-eggs/nyapider.gif",
                 alt: "Hajimi",
                 caption: "別再按了><",
-                downloadName: "下載下來做什麼？？？.gif"
+                downloadName: "下載下來做什麼？！？！.gif"
             });
         } else {
             resetTimer = setTimeout(() => { count = 0; }, RESET_DELAY);
@@ -299,9 +299,9 @@
     });
 })();
 
-// Limo OriginPic
+// Limo 設定圖 OF
 (function () {
-    const link = document.getElementById("fursona1OriginPic");
+    const link = document.getElementById("chara1fursonaOF");
     if (!link || !window.openImageViewer) return;
 
     link.addEventListener("click", (e) => {
