@@ -250,7 +250,7 @@
 (function () {
     const THRESHOLD = 6;
     const RESET_DELAY = 1500;
-    const themeToggleBaka = document.getElementById("themeToggleEgg");
+    const themeToggleBaka = document.getElementById("themeToggleIcon");
 
     if (!themeToggleBaka) return;
 
