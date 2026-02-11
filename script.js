@@ -350,8 +350,8 @@
         /* 55 */ { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす" },
         /* 56 */ { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん" },
         /* 57 */ { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0" },
-        /* 58 */ { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" }
-
+        /* 58 */ { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" },
+        /* 59 */ { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" }
 
         // /* ? */ { artist: "", title: "", url: "", from: "", unofficial: trueOr }
     ];
