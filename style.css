@@ -234,6 +234,10 @@ html.image-viewer-open {
     display: block;
 }
 
+.image-viewer-img-hidden {
+    display: none;
+}
+
 .image-viewer-loading {
     display: none;
     text-align: center;

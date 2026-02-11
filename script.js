@@ -211,15 +211,18 @@
 
         lastActiveElement = document.activeElement;
         
+        imgEl.classList.add("image-viewer-img-hidden");
         loadingEl.classList.add("image-viewer-loading-visible");
         
         const handleLoad = () => {
+            imgEl.classList.remove("image-viewer-img-hidden");
             loadingEl.classList.remove("image-viewer-loading-visible");
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
         };
         
         const handleError = () => {
+            imgEl.classList.remove("image-viewer-img-hidden");
             loadingEl.classList.remove("image-viewer-loading-visible");
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
