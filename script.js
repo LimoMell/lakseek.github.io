@@ -223,21 +223,6 @@
     window.openImageViewer = openViewer;
 })();
 
-// 圖片查看器測試
-(function () {
-    const link = document.getElementById("imageViewerTest");
-    if (!link || !window.openImageViewer) return;
-
-    link.addEventListener("click", (e) => {
-        e.preventDefault();
-        window.openImageViewer({
-            src: "assets/ProjectArchive/蜘蛛咪.gif",
-            alt: "Image Viewer Test",
-            downloadName: "test-gif.gif"
-        });
-    });
-})();
-
 // 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
     const KONAMI_CODE = [
@@ -265,20 +250,49 @@
 (function () {
     const THRESHOLD = 6;
     const RESET_DELAY = 1500;
-    const fursona = document.getElementById("themeToggleEgg");
+    const themeToggleBaka = document.getElementById("themeToggleEgg");
 
-    if (!fursona) return;
+    if (!themeToggleBaka) return;
 
     let count = 0;
     let resetTimer = null;
 
-    fursona.addEventListener("click", () => {
+    themeToggleBaka.addEventListener("click", () => {
         count++;
         clearTimeout(resetTimer);
 
         if (count >= THRESHOLD) {
             count = 0;
             showToast("哇！別再按啦 QwQ");
+        } else {
+            resetTimer = setTimeout(() => { count = 0; }, RESET_DELAY);
+        }
+    });
+})();
+
+// 彩蛋觸發：點更新日期 6 次
+(function () {
+    const THRESHOLD = 6;
+    const RESET_DELAY = 1500;
+    const updateDateBaka = document.getElementById("updateDateEgg");
+
+    if (!updateDateBaka) return;
+
+    let count = 0;
+    let resetTimer = null;
+
+    updateDateBaka.addEventListener("click", () => {
+        count++;
+        clearTimeout(resetTimer);
+
+        if (count >= THRESHOLD) {
+            count = 0;
+            window.openImageViewer({
+                src: "assets/egg/nyapider.gif",
+                alt: "Hajimi",
+                caption: "別再按了><",
+                downloadName: "下載下來做什麼？？？.gif"
+            });
         } else {
             resetTimer = setTimeout(() => { count = 0; }, RESET_DELAY);
         }
@@ -294,7 +308,7 @@
         e.preventDefault();
         window.openImageViewer({
             src: "assets/original/fursona1.png",
-            alt: "limoOriginPic",
+            alt: "Limo's fursona picture",
             caption: "此圖片嚴禁用於 AI 相關應用、二次修改、未經許可轉載。",
             downloadName: "limo-fursona1-original.png"
         });
