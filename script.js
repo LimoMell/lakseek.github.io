@@ -446,7 +446,8 @@
         /* 58 */ { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" },
         /* 59 */ { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" },
         /* 60 */ { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん" },
-        /* 61 */ { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" }
+        /* 61 */ { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" },
+        /* 62 */ { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" }
 
         // /* ? */ { artist: "", title: "", url: "", from: "", unofficial: trueOr }
     ];
