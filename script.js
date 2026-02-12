@@ -129,7 +129,7 @@
     };
 })();
 
-// 圖片查看器
+// 圖片預覽
 (function () {
     const html = document.documentElement;
     let overlay = null;
