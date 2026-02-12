@@ -147,9 +147,6 @@
 
         overlay = document.createElement("div");
         overlay.className = "image-viewer-overlay";
-        overlay.setAttribute("role", "dialog");
-        overlay.setAttribute("aria-modal", "true");
-        overlay.setAttribute("aria-label", "圖片查看器");
 
         const panel = document.createElement("div");
         panel.className = "image-viewer";
@@ -165,9 +162,11 @@
         
         const spinner = document.createElement("div");
         spinner.className = "image-viewer-spinner";
-        const spinnerDot = document.createElement("span");
-        spinnerDot.className = "image-viewer-spinner-dot";
-        spinner.appendChild(spinnerDot);
+        for (let i = 0; i < 3; i++) {
+            const spinnerDot = document.createElement("span");
+            spinnerDot.className = "image-viewer-spinner-dot";
+            spinner.appendChild(spinnerDot);
+        }
         
         const loadingText = document.createElement("p");
         loadingText.className = "image-viewer-loading-text";
@@ -190,7 +189,6 @@
         closeBtn.type = "button";
         closeBtn.className = "image-viewer-button image-viewer-close";
         closeBtn.textContent = "關閉";
-        closeBtn.setAttribute("aria-label", "關閉圖片查看器");
 
         actions.appendChild(downloadLink);
         actions.appendChild(closeBtn);
