@@ -129,7 +129,7 @@
     };
 })();
 
-// 圖片預覽
+// 媒體預覽
 (function () {
     const html = document.documentElement;
     let overlay = null;
@@ -141,60 +141,90 @@
     let lastActiveElement = null;
     let loadingTimeout = null;
     let keydownListener = null;
+    let currentImages = [];
+    let currentIndex = 0;
+    let navEl = null;
+    let navPrevBtn = null;
+    let navNextBtn = null;
+    let thumbnailsContainer = null;
 
     const ensureElements = () => {
         if (overlay) return overlay;
 
         overlay = document.createElement("div");
-        overlay.className = "image-viewer-overlay";
+        overlay.className = "media-preview-overlay";
 
         const panel = document.createElement("div");
-        panel.className = "image-viewer";
+        panel.className = "media-preview";
 
         imgEl = document.createElement("img");
-        imgEl.className = "image-viewer-img";
+        imgEl.className = "media-preview-img";
         imgEl.alt = "";
 
         loadingEl = document.createElement("div");
-        loadingEl.className = "image-viewer-loading";
+        loadingEl.className = "media-preview-loading";
         loadingEl.setAttribute("role", "status");
         loadingEl.setAttribute("aria-live", "polite");
         
         const spinner = document.createElement("div");
-        spinner.className = "image-viewer-spinner";
+        spinner.className = "media-preview-spinner";
         for (let i = 0; i < 3; i++) {
             const spinnerDot = document.createElement("span");
-            spinnerDot.className = "image-viewer-spinner-dot";
+            spinnerDot.className = "media-preview-spinner-dot";
             spinner.appendChild(spinnerDot);
         }
         
         const loadingText = document.createElement("p");
-        loadingText.className = "image-viewer-loading-text";
+        loadingText.className = "media-preview-loading-text";
         loadingText.textContent = "載入中...";
         loadingEl.appendChild(spinner);
         loadingEl.appendChild(loadingText);
 
         captionEl = document.createElement("div");
-        captionEl.className = "image-viewer-caption";
+        captionEl.className = "media-preview-caption";
+        
+        navEl = document.createElement("div");
+        navEl.className = "media-preview-nav";
+        
+        navPrevBtn = document.createElement("button");
+        navPrevBtn.type = "button";
+        navPrevBtn.className = "media-preview-nav-button";
+        navPrevBtn.textContent = "←";
+        navPrevBtn.addEventListener("click", () => showImage(currentIndex - 1));
+        
+        thumbnailsContainer = document.createElement("div");
+        thumbnailsContainer.className = "media-preview-thumbnails";
+        
+        navNextBtn = document.createElement("button");
+        navNextBtn.type = "button";
+        navNextBtn.className = "media-preview-nav-button";
+        navNextBtn.textContent = "→";
+        navNextBtn.addEventListener("click", () => showImage(currentIndex + 1));
+        
+        navEl.appendChild(navPrevBtn);
+        navEl.appendChild(thumbnailsContainer);
+        navEl.appendChild(navNextBtn);
 
         const actions = document.createElement("div");
-        actions.className = "image-viewer-actions";
+        actions.className = "media-preview-actions";
 
         downloadLink = document.createElement("a");
-        downloadLink.className = "image-viewer-button";
+        downloadLink.className = "media-preview-button";
         downloadLink.textContent = "下載";
         downloadLink.setAttribute("download", "");
 
         closeBtn = document.createElement("button");
         closeBtn.type = "button";
-        closeBtn.className = "image-viewer-button image-viewer-close";
+        closeBtn.className = "media-preview-button media-preview-close";
         closeBtn.textContent = "關閉";
 
         actions.appendChild(downloadLink);
         actions.appendChild(closeBtn);
+
         panel.appendChild(imgEl);
         panel.appendChild(loadingEl);
         panel.appendChild(captionEl);
+        panel.appendChild(navEl);
         panel.appendChild(actions);
         overlay.appendChild(panel);
         document.body.appendChild(overlay);
@@ -209,10 +239,14 @@
     };
 
     const handleKeyPress = (e) => {
-        if (!overlay?.classList.contains("image-viewer-visible")) return;
+        if (!overlay?.classList.contains("media-preview-visible")) return;
         
         if (e.key === "Escape") {
             closeViewer();
+        } else if (e.key === "ArrowRight") {
+            showImage(currentIndex + 1);
+        } else if (e.key === "ArrowLeft") {
+            showImage(currentIndex - 1);
         }
     };
 
@@ -223,68 +257,126 @@
             document.removeEventListener("keydown", keydownListener);
             keydownListener = null;
         }
-        overlay.classList.remove("image-viewer-visible");
-        html.classList.remove("image-viewer-open");
+        overlay.classList.remove("media-preview-visible");
+        html.classList.remove("media-preview-open");
         lastActiveElement?.focus?.();
         lastActiveElement = null;
+        currentImages = [];
+        currentIndex = 0;
     };
 
-    const openViewer = (options) => {
-        if (!options?.src) return;
-        ensureElements();
-
-        clearTimeout(loadingTimeout);
-        lastActiveElement = document.activeElement;
+    const showImage = (index) => {
+        if (!currentImages || currentImages.length === 0) return;
+        if (index < 0 || index >= currentImages.length) return;
         
-        imgEl.classList.add("image-viewer-img-hidden");
-        loadingEl.classList.add("image-viewer-loading-visible");
+        currentIndex = index;
+        const image = currentImages[index];
+        
+        clearTimeout(loadingTimeout);
+        imgEl.classList.add("media-preview-img-hidden");
+        loadingEl.classList.add("media-preview-loading-visible");
         
         const handleLoad = () => {
             clearTimeout(loadingTimeout);
-            imgEl.classList.remove("image-viewer-img-hidden");
-            loadingEl.classList.remove("image-viewer-loading-visible");
+            imgEl.classList.remove("media-preview-img-hidden");
+            loadingEl.classList.remove("media-preview-loading-visible");
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
         };
         
         const handleError = () => {
             clearTimeout(loadingTimeout);
-            imgEl.classList.remove("image-viewer-img-hidden");
-            loadingEl.classList.remove("image-viewer-loading-visible");
+            imgEl.classList.remove("media-preview-img-hidden");
+            loadingEl.classList.remove("media-preview-loading-visible");
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
         };
         
         loadingTimeout = setTimeout(() => {
-            imgEl.classList.remove("image-viewer-img-hidden");
-            loadingEl.classList.remove("image-viewer-loading-visible");
+            imgEl.classList.remove("media-preview-img-hidden");
+            loadingEl.classList.remove("media-preview-loading-visible");
         }, 10000);
         
         imgEl.addEventListener("load", handleLoad);
         imgEl.addEventListener("error", handleError);
         
-        imgEl.src = options.src;
-        imgEl.alt = options.alt || "";
-        captionEl.textContent = options.caption || options.alt || "";
-        downloadLink.href = options.downloadHref || options.src;
+        imgEl.src = image.src;
+        imgEl.alt = image.alt || "";
+        captionEl.textContent = image.caption || image.alt || "";
+        downloadLink.href = image.downloadHref || image.src;
 
-        if (options.downloadName) {
-            downloadLink.setAttribute("download", options.downloadName);
+        if (image.downloadName) {
+            downloadLink.setAttribute("download", image.downloadName);
         } else {
             downloadLink.removeAttribute("download");
         }
+        
+        if (currentImages.length > 1) {
+            navPrevBtn.disabled = currentIndex === 0;
+            navNextBtn.disabled = currentIndex === currentImages.length - 1;
+            
+            const thumbnails = thumbnailsContainer.querySelectorAll(".media-preview-thumbnail");
+            thumbnails.forEach((thumb, i) => {
+                if (i === currentIndex) {
+                    thumb.classList.add("media-preview-thumbnail-active");
+                } else {
+                    thumb.classList.remove("media-preview-thumbnail-active");
+                }
+            });
+        }
+    };
 
+    const openViewer = (options) => {
+        if (!options?.images || !Array.isArray(options.images)) return;
+        
+        const images = options.images;
+        if (images.length === 0) return;
+        
+        ensureElements();
+        currentImages = images;
+        currentIndex = 0;
+        
+        thumbnailsContainer.innerHTML = "";
+        images.forEach((image, index) => {
+            const thumbWrapper = document.createElement("div");
+            thumbWrapper.className = "media-preview-thumbnail";
+            if (index === 0) {
+                thumbWrapper.classList.add("media-preview-thumbnail-active");
+            }
+            
+            const thumbImg = document.createElement("img");
+            thumbImg.src = image.src;
+            thumbImg.alt = image.alt || `圖片 ${index + 1}`;
+            
+            thumbWrapper.appendChild(thumbImg);
+            thumbWrapper.addEventListener("click", () => showImage(index));
+            thumbnailsContainer.appendChild(thumbWrapper);
+        });
+        
+        if (images.length > 1) {
+            navEl.classList.add("media-preview-nav-visible");
+            navPrevBtn.disabled = true;
+            navNextBtn.disabled = false;
+        } else {
+            navEl.classList.remove("media-preview-nav-visible");
+        }
+        
+        clearTimeout(loadingTimeout);
+        lastActiveElement = document.activeElement;
+        
         if (!keydownListener) {
             keydownListener = handleKeyPress;
             document.addEventListener("keydown", keydownListener);
         }
 
-        overlay.classList.add("image-viewer-visible");
-        html.classList.add("image-viewer-open");
+        overlay.classList.add("media-preview-visible");
+        html.classList.add("media-preview-open");
+        
+        showImage(0);
         closeBtn.focus();
     };
 
-    window.openImageViewer = openViewer;
+    window.openMediaPreview = openViewer;
 })();
 
 // 彩蛋觸發：↑↑↓↓←→←→BABA
@@ -351,11 +443,14 @@
 
         if (count >= THRESHOLD) {
             count = 0;
-            window.openImageViewer({
-                src: "assets/easter-eggs/nyapider.gif",
-                alt: "Hajimi",
-                caption: "別再按了><",
-                downloadName: "下載下來做什麼？！？！.gif"
+            window.openMediaPreview({
+                images: [{
+                    src: "assets/easter-eggs/nyapider.gif",
+                    alt: "Hajimi",
+                    caption: "別再按了><",
+                    downloadName: "下載下來做什麼？！？！.gif"
+                }
+            ]
             });
         } else {
             resetTimer = setTimeout(() => { count = 0; }, RESET_DELAY);
@@ -366,15 +461,42 @@
 // Limo 設定圖 OF
 (function () {
     const link = document.getElementById("chara1fursonaOF");
-    if (!link || !window.openImageViewer) return;
+    if (!link || !window.openMediaPreview) return;
 
     link.addEventListener("click", (e) => {
         e.preventDefault();
-        window.openImageViewer({
-            src: "assets/characters/artworks/1-fursona-of.png",
-            alt: "Limo's fursona picture",
-            caption: "此圖片嚴禁用於 AI 相關應用、二次修改、未經許可轉載。",
-            downloadName: "limo-fursona1-original.png"
+        window.openMediaPreview({
+            images: [{
+                src: "assets/characters/artworks/1/fursona-of.png",
+                alt: "Limo's fursona picture",
+                caption: "里莫的設定圖",
+                downloadName: "limo-fursona1.png"
+            }]
+        });
+    });
+})();
+
+// Limo 的圖
+(function () {
+    const link = document.getElementById("chara1arts");
+    if (!link || !window.openMediaPreview) return;
+
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.openMediaPreview({
+            images: [{
+                src: "assets/characters/artworks/1/new-lunar-year-2026-ych-a.png",
+                alt: "New lunar year YCH (A) by 瑞樹",
+                caption: "新年 YCH (A) | イラスト：瑞樹",
+                downloadName: "limo-pic1.png"
+            },
+            {
+                src: "assets/characters/artworks/1/new-lunar-year-2026-ych-b.png",
+                alt: "New lunar year YCH (B) by 瑞樹",
+                caption: "新年 YCH (B) | イラスト：瑞樹",
+                downloadName: "limo-pic2.png"
+            }
+        ]
         });
     });
 })();
@@ -383,73 +505,73 @@
 (function () {
     const songs = [
         // MSTP
-        /* 0 */ { artist: "C418", title: "Alpha", url: "https://youtu.be/q6o7qpPHd7g", from: "Minecraft" },
-        /* 1 */ { artist: "KIVΛ, Ice", title: "͟͝͞Ⅱ́̕", url: "https://youtu.be/H2k7TMT3ouA", from: "Cytus II" },
-        /* 2 */ { artist: "KIVΛ", title: "The Whole Rest", url: "https://youtu.be/TWqMQeVqqnA", from: "Cytus II" },
-        /* 3 */ { artist: "Theatrum Aeternum", title: "acta est fabula, plaudite", url: "https://youtu.be/TPTsSu77MKI", from: "vivid/stasis" },
-        /* 4 */ { artist: "eicateve", title: "R.I.P.", url: "https://youtu.be/QJakdR6FWdg" },
-        /* 5 */ { artist: "Poppin'Party", title: "Returns", url: "https://youtu.be/zWKV5yudE18", from: "BanG Dream!" },
-        /* 6 */ { artist: "ryo (supercell)", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", unofficial: true },
-        /* 7 */ { artist: "Ice", title: "L", url: "https://youtu.be/ZXy_1LA-RlA" },
-        /* 8 */ { artist: "Ice", title: "L2 -Ascension- (Act 1)", url: "https://youtu.be/lAkUpYCUXCU", unofficial: true },
-        /* 9 */ { artist: "Ice", title: "L2 -Ascension- (Act 2)", url: "https://youtu.be/8nF7MU5iGng", unofficial: true },
-        /* 10 */ { artist: "Toby Fox", title: "MEGALOVANIA", url: "https://youtu.be/KK3KXAECte4", from: "UNDERTALE" },
-        /* 11 */ { artist: "ああああ", title: "トゥルエンド", url: "https://youtu.be/hK7Inl9Rark", from: "でびるコネクショん" },
-        /* 12 */ { artist: "Sta", title: "Incyde", url: "https://youtu.be/-1OiVXRGE-U", from: "Cytus II" },
-        /* 13 */ { artist: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ", title: "paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0" },
-        /* 14 */ { artist: "Knighthood", title: "Super Universe (Knighthood Remix)", url: "https://youtu.be/v7rqB-o52tE", unofficial: true },
-        /* 15 */ { artist: "technoplanet", title: "XYZ", url: "https://youtu.be/ZYXFo637GNc", from: "Cytus II" },
-        /* 16 */ { artist: "Team Grimoire", title: "Grievous Lady", url: "https://youtu.be/QXeaLw2s-Wo", from: "Arcaea" },
-        /* 17 */ { artist: "Team Grimoire", title: "Rrhar'il", url: "https://youtu.be/Hwny8gQRYZA", from: "Phigros" },
-        /* 18 */ { artist: "Cheetah Mobile", title: "Neon", url: "https://youtu.be/pJIh0KPl98s", from: "Rolling Sky" },
-        /* 19 */ { artist: "Dimrain47", title: "At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A" },
-        /* 20 */ { artist: "cYsmix", title: "Peer Gynt", url: "https://youtu.be/w4dLTLW6dJ0", unofficial: true },
-        /* 21 */ { artist: "USAO & Camellia", title: "Möbius", url: "https://youtu.be/2fsZdfixj60", from: "WACCA Reverse" },
-        /* 22 */ { artist: "Antistar feat. Ctymax", title: "Class Memories", url: "https://youtu.be/3Ka6yPBCs5A", unofficial: true },
-        /* 23 */ { artist: "uma vs. モリモリあつし", title: "Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg" },
+        { artist: "C418", title: "Alpha", url: "https://youtu.be/q6o7qpPHd7g", from: "Minecraft" },
+        { artist: "KIVΛ, Ice", title: "͟͝͞Ⅱ́̕", url: "https://youtu.be/H2k7TMT3ouA", from: "Cytus II" },
+        { artist: "KIVΛ", title: "The Whole Rest", url: "https://youtu.be/TWqMQeVqqnA", from: "Cytus II" },
+        { artist: "Theatrum Aeternum", title: "acta est fabula, plaudite", url: "https://youtu.be/TPTsSu77MKI", from: "vivid/stasis" },
+        { artist: "eicateve", title: "R.I.P.", url: "https://youtu.be/QJakdR6FWdg" },
+        { artist: "Poppin'Party", title: "Returns", url: "https://youtu.be/zWKV5yudE18", from: "BanG Dream!" },
+        { artist: "ryo (supercell)", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", unofficial: true },
+        { artist: "Ice", title: "L", url: "https://youtu.be/ZXy_1LA-RlA" },
+        { artist: "Ice", title: "L2 -Ascension- (Act 1)", url: "https://youtu.be/lAkUpYCUXCU", unofficial: true },
+        { artist: "Ice", title: "L2 -Ascension- (Act 2)", url: "https://youtu.be/8nF7MU5iGng", unofficial: true },
+        { artist: "Toby Fox", title: "MEGALOVANIA", url: "https://youtu.be/KK3KXAECte4", from: "UNDERTALE" },
+        { artist: "ああああ", title: "トゥルエンド", url: "https://youtu.be/hK7Inl9Rark", from: "でびるコネクショん" },
+        { artist: "Sta", title: "Incyde", url: "https://youtu.be/-1OiVXRGE-U", from: "Cytus II" },
+        { artist: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ", title: "paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0" },
+        { artist: "Knighthood", title: "Super Universe (Knighthood Remix)", url: "https://youtu.be/v7rqB-o52tE", unofficial: true },
+        { artist: "technoplanet", title: "XYZ", url: "https://youtu.be/ZYXFo637GNc", from: "Cytus II" },
+        { artist: "Team Grimoire", title: "Grievous Lady", url: "https://youtu.be/QXeaLw2s-Wo", from: "Arcaea" },
+        { artist: "Team Grimoire", title: "Rrhar'il", url: "https://youtu.be/Hwny8gQRYZA", from: "Phigros" },
+        { artist: "Cheetah Mobile", title: "Neon", url: "https://youtu.be/pJIh0KPl98s", from: "Rolling Sky" },
+        { artist: "Dimrain47", title: "At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A" },
+        { artist: "cYsmix", title: "Peer Gynt", url: "https://youtu.be/w4dLTLW6dJ0", unofficial: true },
+        { artist: "USAO & Camellia", title: "Möbius", url: "https://youtu.be/2fsZdfixj60", from: "WACCA Reverse" },
+        { artist: "Antistar feat. Ctymax", title: "Class Memories", url: "https://youtu.be/3Ka6yPBCs5A", unofficial: true },
+        { artist: "uma vs. モリモリあつし", title: "Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg" },
 
         // 突然喜歡的歌
-        /* 24 */ { artist: "A-One", title: "Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
-        /* 25 */ { artist: "上海アリス幻樂団", title: "偶像に世界を委ねて　〜 Idoratrize World", url: "https://youtu.be/7DF5wIPlvq0", from: "東方鬼形獣 〜 Wily Beast and Weakest Creature." },
-        /* 26 */ { artist: "101-202-404", title: "小悪魔×3の大脫走！？", url: "https://youtu.be/HCgs32kX8eQ", from: "Cytus II", unofficial: true },
-        /* 27 */ { artist: "黒皇帝", title: "Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
-        /* 28 */ { artist: "黒皇帝 vs MIssionary", title: "Deus Judicium", url: "https://youtu.be/CZJoFLSe9Ao", from: "Rotaeno" },
-        /* 29 */ { artist: "seatrus", title: "零號車輛", url: "https://youtu.be/Mk0OFd9du0w", from: "Paradigm: Reboot" },
-        /* 30 */ { artist: "NeLiME", title: "CODE NAME : ZERO", url: "https://youtu.be/26nQsUdhBNQ", from: "Cytus" },
-        /* 31 */ { artist: "log()", title: "SELF", url: "https://youtu.be/q7PXMBjTVLc", from: "vivid/stasis" },
-        /* 32 */ { artist: "Juggernaut.", title: "Revenant", url: "https://youtu.be/Oa9K-tWrMIU" },
-        /* 33 */ { artist: "Ayatsugu_Revolved", title: "100sec Cat Dreams", url: "https://youtu.be/zBlmtNKgrk0", from: "Cytus II", unofficial: true },
-        /* 34 */ { artist: "It's MyGO!!!!!", title: "詩超絆", url: "https://youtu.be/wJ-OebTVyvk", from: "BanG Dream!" },
-        /* 35 */ { artist: "Poppin'Party", title: "Dreamers Go!", url: "https://youtu.be/VigNV3bsE_k", from: "BanG Dream!" },
-        /* 36 */ { artist: "ああああ", title: "でびるコネクショん", url: "https://youtu.be/aQx9OjvQZEo", from: "でびるコネクショん" },
-        /* 37 */ { artist: "KIVΛ", title: "Used to be", url: "https://youtu.be/hGaJNvkRfo0", from: "Cytus II" },
-        /* 38 */ { artist: "やいり", title: "Ultimate feat. 放課後のあいつ", url: "https://youtu.be/j-n1Ah5zXT0", from: "Cytus II", unofficial: true },
-        /* 39 */ { artist: "MELOIMAGE", title: "Imprint", url: "https://youtu.be/mTcFEVeVoDs", from: "Cytus II", unofficial: true },
-        /* 40 */ { artist: "Apo11o program", title: "Re:The END -再-", url: "https://youtu.be/gnt9Bnei2is", from: "Cytus II" },
-        /* 41 */ { artist: 'NOMA w/ Apo11o"ALGIEBA"program', title: "LAST Re;SØRT", url: "https://youtu.be/2a0wyR-Hu1Y", from: "RAVON" },
-        /* 42 */ { artist: "Tobu", title: "Higher", url: "https://youtu.be/blA7epJJaR4" },
-        /* 43 */ { artist: "ユリイ・カノン", title: "スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
-        /* 44 */ { artist: "上海アリス幻樂団", title: "平安のエイリアン", url: "https://youtu.be/1fwZxZIb2uE", from: "東方星蓮船 〜 Undefined Fantastic Object.", unofficial: true },
-        /* 45 */ { artist: "Roselia", title: "Neo-Aspect", url: "https://youtu.be/03iVXFZ8jrs", from: "BanG Dream!" },
-        /* 46 */ { artist: "RAISE A SUILEN", title: "DEAD HEAT BEAT", url: "https://youtu.be/2gJfjLGCf9U", from: "BanG Dream!" },
-        /* 47 */ { artist: "DECO*27", title: "ヴァンパイア", url: "https://youtu.be/e1xCOsgWG0M" },
-        /* 48 */ { artist: "溝口ゆうま feat. 大瀬良あい", title: "Nídhögg", url: "https://youtu.be/3w6I9Ye304o", from: "Cytus II" },
-        /* 49 */ { artist: "Tsukasa", title: "Stardust Sphere", url: "https://youtu.be/f9XYU172ImI", from: "Cytus" },
-        /* 50 */ { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II" },
-        /* 51 */ { artist: "DJ Myosuke & Gram & t+pazolite", title: "Σ", url: "https://youtu.be/qbQHPdTLX40" },
-        /* 52 */ { artist: "Y&Co.", title: "Daisuke", url: "https://youtu.be/T9rMDOkPiRY", unofficial: true },
-        /* 53 */ { artist: "BlackY VS Yooh VS siromaru VS xi VS モリモリあつし", title: "創 -汝ら新世界へ歩む者なり-", url: "https://youtu.be/kLs6UW43MsQ", from: "CHUNITHM" },
-        /* 54 */ { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす" },
-        /* 55 */ { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす" },
-        /* 56 */ { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん" },
-        /* 57 */ { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0" },
-        /* 58 */ { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" },
-        /* 59 */ { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" },
-        /* 60 */ { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん" },
-        /* 61 */ { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" },
-        /* 62 */ { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" }
+        { artist: "A-One", title: "Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
+        { artist: "上海アリス幻樂団", title: "偶像に世界を委ねて　〜 Idoratrize World", url: "https://youtu.be/7DF5wIPlvq0", from: "東方鬼形獣 〜 Wily Beast and Weakest Creature." },
+        { artist: "101-202-404", title: "小悪魔×3の大脫走！？", url: "https://youtu.be/HCgs32kX8eQ", from: "Cytus II", unofficial: true },
+        { artist: "黒皇帝", title: "Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
+        { artist: "黒皇帝 vs MIssionary", title: "Deus Judicium", url: "https://youtu.be/CZJoFLSe9Ao", from: "Rotaeno" },
+        { artist: "seatrus", title: "零號車輛", url: "https://youtu.be/Mk0OFd9du0w", from: "Paradigm: Reboot" },
+        { artist: "NeLiME", title: "CODE NAME : ZERO", url: "https://youtu.be/26nQsUdhBNQ", from: "Cytus" },
+        { artist: "log()", title: "SELF", url: "https://youtu.be/q7PXMBjTVLc", from: "vivid/stasis" },
+        { artist: "Juggernaut.", title: "Revenant", url: "https://youtu.be/Oa9K-tWrMIU" },
+        { artist: "Ayatsugu_Revolved", title: "100sec Cat Dreams", url: "https://youtu.be/zBlmtNKgrk0", from: "Cytus II", unofficial: true },
+        { artist: "It's MyGO!!!!!", title: "詩超絆", url: "https://youtu.be/wJ-OebTVyvk", from: "BanG Dream!" },
+        { artist: "Poppin'Party", title: "Dreamers Go!", url: "https://youtu.be/VigNV3bsE_k", from: "BanG Dream!" },
+        { artist: "ああああ", title: "でびるコネクショん", url: "https://youtu.be/aQx9OjvQZEo", from: "でびるコネクショん" },
+        { artist: "KIVΛ", title: "Used to be", url: "https://youtu.be/hGaJNvkRfo0", from: "Cytus II" },
+        { artist: "やいり", title: "Ultimate feat. 放課後のあいつ", url: "https://youtu.be/j-n1Ah5zXT0", from: "Cytus II", unofficial: true },
+        { artist: "MELOIMAGE", title: "Imprint", url: "https://youtu.be/mTcFEVeVoDs", from: "Cytus II", unofficial: true },
+        { artist: "Apo11o program", title: "Re:The END -再-", url: "https://youtu.be/gnt9Bnei2is", from: "Cytus II" },
+        { artist: 'NOMA w/ Apo11o"ALGIEBA"program', title: "LAST Re;SØRT", url: "https://youtu.be/2a0wyR-Hu1Y", from: "RAVON" },
+        { artist: "Tobu", title: "Higher", url: "https://youtu.be/blA7epJJaR4" },
+        { artist: "ユリイ・カノン", title: "スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
+        { artist: "上海アリス幻樂団", title: "平安のエイリアン", url: "https://youtu.be/1fwZxZIb2uE", from: "東方星蓮船 〜 Undefined Fantastic Object.", unofficial: true },
+        { artist: "Roselia", title: "Neo-Aspect", url: "https://youtu.be/03iVXFZ8jrs", from: "BanG Dream!" },
+        { artist: "RAISE A SUILEN", title: "DEAD HEAT BEAT", url: "https://youtu.be/2gJfjLGCf9U", from: "BanG Dream!" },
+        { artist: "DECO*27", title: "ヴァンパイア", url: "https://youtu.be/e1xCOsgWG0M" },
+        { artist: "溝口ゆうま feat. 大瀬良あい", title: "Nídhögg", url: "https://youtu.be/3w6I9Ye304o", from: "Cytus II" },
+        { artist: "Tsukasa", title: "Stardust Sphere", url: "https://youtu.be/f9XYU172ImI", from: "Cytus" },
+        { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II" },
+        { artist: "DJ Myosuke & Gram & t+pazolite", title: "Σ", url: "https://youtu.be/qbQHPdTLX40" },
+        { artist: "Y&Co.", title: "Daisuke", url: "https://youtu.be/T9rMDOkPiRY", unofficial: true },
+        { artist: "BlackY VS Yooh VS siromaru VS xi VS モリモリあつし", title: "創 -汝ら新世界へ歩む者なり-", url: "https://youtu.be/kLs6UW43MsQ", from: "CHUNITHM" },
+        { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす" },
+        { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす" },
+        { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん" },
+        { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0" },
+        { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" },
+        { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" },
+        { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん" },
+        { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" },
+        { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" }
 
-        // /* ? */ { artist: "", title: "", url: "", from: "", unofficial: trueOr }
+        // { artist: "", title: "", url: "", from: "", unofficial: trueOr }
     ];
 
     if (songs.length === 0) {
