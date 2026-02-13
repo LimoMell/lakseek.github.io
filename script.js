@@ -180,7 +180,7 @@
 
         const loadingText = document.createElement("p");
         loadingText.className = "media-preview-loading-text";
-        loadingText.textContent = "載入中...";
+        loadingText.textContent = "Loading...";
         loadingEl.appendChild(spinner);
         loadingEl.appendChild(loadingText);
 
@@ -214,13 +214,13 @@
 
         downloadLink = document.createElement("a");
         downloadLink.className = "media-preview-button";
-        downloadLink.textContent = "下載";
+        downloadLink.textContent = "Download";
         downloadLink.setAttribute("download", "");
 
         closeBtn = document.createElement("button");
         closeBtn.type = "button";
         closeBtn.className = "media-preview-button media-preview-close";
-        closeBtn.textContent = "關閉";
+        closeBtn.textContent = "Close";
 
         actions.appendChild(downloadLink);
         actions.appendChild(closeBtn);
