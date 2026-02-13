@@ -133,6 +133,7 @@
 (function () {
     const html = document.documentElement;
     let overlay = null;
+    let panel = null;
     let imgEl = null;
     let captionEl = null;
     let downloadLink = null;
@@ -154,8 +155,11 @@
         overlay = document.createElement("div");
         overlay.className = "media-preview-overlay";
 
-        const panel = document.createElement("div");
+        panel = document.createElement("div");
         panel.className = "media-preview";
+        panel.setAttribute("tabindex", "-1");
+        panel.setAttribute("role", "dialog");
+        panel.setAttribute("aria-modal", "true");
 
         imgEl = document.createElement("img");
         imgEl.className = "media-preview-img";
@@ -165,7 +169,7 @@
         loadingEl.className = "media-preview-loading";
         loadingEl.setAttribute("role", "status");
         loadingEl.setAttribute("aria-live", "polite");
-        
+
         const spinner = document.createElement("div");
         spinner.className = "media-preview-spinner";
         for (let i = 0; i < 3; i++) {
@@ -173,7 +177,7 @@
             spinnerDot.className = "media-preview-spinner-dot";
             spinner.appendChild(spinnerDot);
         }
-        
+
         const loadingText = document.createElement("p");
         loadingText.className = "media-preview-loading-text";
         loadingText.textContent = "載入中...";
@@ -182,25 +186,25 @@
 
         captionEl = document.createElement("div");
         captionEl.className = "media-preview-caption";
-        
+
         navEl = document.createElement("div");
         navEl.className = "media-preview-nav";
-        
+
         navPrevBtn = document.createElement("button");
         navPrevBtn.type = "button";
         navPrevBtn.className = "media-preview-nav-button";
         navPrevBtn.textContent = "←";
         navPrevBtn.addEventListener("click", () => showImage(currentIndex - 1));
-        
+
         thumbnailsContainer = document.createElement("div");
         thumbnailsContainer.className = "media-preview-thumbnails";
-        
+
         navNextBtn = document.createElement("button");
         navNextBtn.type = "button";
         navNextBtn.className = "media-preview-nav-button";
         navNextBtn.textContent = "→";
         navNextBtn.addEventListener("click", () => showImage(currentIndex + 1));
-        
+
         navEl.appendChild(navPrevBtn);
         navEl.appendChild(thumbnailsContainer);
         navEl.appendChild(navNextBtn);
@@ -240,7 +244,7 @@
 
     const handleKeyPress = (e) => {
         if (!overlay?.classList.contains("media-preview-visible")) return;
-        
+
         if (e.key === "Escape") {
             closeViewer();
         } else if (e.key === "ArrowRight") {
@@ -268,14 +272,14 @@
     const showImage = (index) => {
         if (!currentImages || currentImages.length === 0) return;
         if (index < 0 || index >= currentImages.length) return;
-        
+
         currentIndex = index;
         const image = currentImages[index];
-        
+
         clearTimeout(loadingTimeout);
         imgEl.classList.add("media-preview-img-hidden");
         loadingEl.classList.add("media-preview-loading-visible");
-        
+
         const handleLoad = () => {
             clearTimeout(loadingTimeout);
             imgEl.classList.remove("media-preview-img-hidden");
@@ -283,7 +287,7 @@
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
         };
-        
+
         const handleError = () => {
             clearTimeout(loadingTimeout);
             imgEl.classList.remove("media-preview-img-hidden");
@@ -291,15 +295,15 @@
             imgEl.removeEventListener("load", handleLoad);
             imgEl.removeEventListener("error", handleError);
         };
-        
+
         loadingTimeout = setTimeout(() => {
             imgEl.classList.remove("media-preview-img-hidden");
             loadingEl.classList.remove("media-preview-loading-visible");
         }, 10000);
-        
+
         imgEl.addEventListener("load", handleLoad);
         imgEl.addEventListener("error", handleError);
-        
+
         imgEl.src = image.src;
         imgEl.alt = image.alt || "";
         captionEl.textContent = image.caption || image.alt || "";
@@ -310,11 +314,11 @@
         } else {
             downloadLink.removeAttribute("download");
         }
-        
+
         if (currentImages.length > 1) {
             navPrevBtn.disabled = currentIndex === 0;
             navNextBtn.disabled = currentIndex === currentImages.length - 1;
-            
+
             const thumbnails = thumbnailsContainer.querySelectorAll(".media-preview-thumbnail");
             thumbnails.forEach((thumb, i) => {
                 if (i === currentIndex) {
@@ -328,14 +332,14 @@
 
     const openViewer = (options) => {
         if (!options?.images || !Array.isArray(options.images)) return;
-        
+
         const images = options.images;
         if (images.length === 0) return;
-        
+
         ensureElements();
         currentImages = images;
         currentIndex = 0;
-        
+
         thumbnailsContainer.innerHTML = "";
         images.forEach((image, index) => {
             const thumbWrapper = document.createElement("div");
@@ -343,16 +347,16 @@
             if (index === 0) {
                 thumbWrapper.classList.add("media-preview-thumbnail-active");
             }
-            
+
             const thumbImg = document.createElement("img");
             thumbImg.src = image.src;
             thumbImg.alt = image.alt || `圖片 ${index + 1}`;
-            
+
             thumbWrapper.appendChild(thumbImg);
             thumbWrapper.addEventListener("click", () => showImage(index));
             thumbnailsContainer.appendChild(thumbWrapper);
         });
-        
+
         if (images.length > 1) {
             navEl.classList.add("media-preview-nav-visible");
             navPrevBtn.disabled = true;
@@ -360,10 +364,10 @@
         } else {
             navEl.classList.remove("media-preview-nav-visible");
         }
-        
+
         clearTimeout(loadingTimeout);
         lastActiveElement = document.activeElement;
-        
+
         if (!keydownListener) {
             keydownListener = handleKeyPress;
             document.addEventListener("keydown", keydownListener);
@@ -371,9 +375,9 @@
 
         overlay.classList.add("media-preview-visible");
         html.classList.add("media-preview-open");
-        
+
         showImage(0);
-        closeBtn.focus();
+        panel.focus();
     };
 
     window.openMediaPreview = openViewer;
@@ -450,7 +454,7 @@
                     caption: "別再按了><",
                     downloadName: "下載下來做什麼？！？！.gif"
                 }
-            ]
+                ]
             });
         } else {
             resetTimer = setTimeout(() => { count = 0; }, RESET_DELAY);
@@ -496,7 +500,7 @@
                 caption: "新年 YCH (B) | イラスト：瑞樹",
                 downloadName: "limo-pic2.png"
             }
-        ]
+            ]
         });
     });
 })();
@@ -614,14 +618,18 @@
 
         container.innerHTML = "";
 
+        const titleWrapper = document.createElement("h3");
+        titleWrapper.style.margin = "0 0 0.5rem 0";
+        titleWrapper.style.fontSize = "1.1rem";
+
         const titleLink = document.createElement("a");
         titleLink.href = dailySong.url;
         titleLink.target = "_blank";
         titleLink.rel = "noopener noreferrer";
         titleLink.textContent = dailySong.unofficial ? `${dailySong.title} (unofficial)` : dailySong.title;
-        container.appendChild(titleLink);
 
-        container.appendChild(document.createElement("br"));
+        titleWrapper.appendChild(titleLink);
+        container.appendChild(titleWrapper);
 
         const artistDiv = document.createElement("p");
         artistDiv.style.margin = "0.3em 0";

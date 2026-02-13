@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>里莫的自介～(∠・ω< )⌒☆</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png?">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="里莫的自我介紹網站">
-    <meta name="twitter:image" content="https://limomell.github.io/assets/og-images/twitter-image.png">
-    <meta property="og:url" content="https://limomell.github.io">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="里莫的自我介紹網站">
-    <meta property="og:image" content="https://limomell.github.io/assets/og-images/og-image.png">
-    <link rel="stylesheet" href="style.css"/>
+            <link rel="icon" type="image/png" href="assets/favicon.png?">
+            <meta name="description" content="里莫 (Limo) 的自我介紹網站，包含個人簡介、興趣、遊戲經歷以及每日推薦歌曲。">
+            <meta name="theme-color" content="#dcdcdc" media="(prefers-color-scheme: light)">
+            <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="里莫的自我介紹網站">
+            <meta name="twitter:image" content="https://limomell.github.io/assets/og-images/twitter-image.png">
+            <meta property="og:url" content="https://limomell.github.io">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="里莫的自我介紹網站">
+            <meta property="og:image" content="https://limomell.github.io/assets/og-images/og-image.png">
+            <link rel="stylesheet" href="style.css" />
+            <script>
+                (function () {
+                    const STORAGE_KEY = "theme-preference";
+                    const THEMES = { light: "light", dark: "dark" };
+                    const getStoredPreference = () => {
+                        try {
+                            return localStorage.getItem(STORAGE_KEY);
+                        } catch { return null; }
+                    };
+                    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+                    const pref = getStoredPreference();
+                    const effective = (pref === THEMES.light || pref === THEMES.dark) ? pref : (mediaQuery.matches ? THEMES.dark : THEMES.light);
+                    document.documentElement.setAttribute("data-theme", effective);
+                })();
+            </script>
+            <script src="script.js" defer></script>
 </head>
+
 <body>
     <div class="top">
         <div class="topLeft">
             <img src="assets/icons/lm-logo.png" alt="lm logo" class="logo" width="64" height="64">
             <h1 class="name">里莫 Limo</h1>
         </div>
-        <span style="color: #000" flex= "0 0 auto">被你看到了><</span>
+        <span style="color: #000" flex="0 0 auto">被你看到了><< /span>
     </div>
     <div class="middle">
         <!-- 簡介 -->
@@ -65,7 +86,8 @@
             QQ：3687305622<br>
             Reddit：<a target="_blank" href="https://reddit.com/user/LimoMell">LimoMell</a><br>
             Telegram：<a target="_blank" href="https://t.me/limo087">limo087</a><br>
-            Twitter/X：<a target="_blank" href="https://x.com/LimoMell">LimoMell</a>、<a target="_blank" href="https://x.com/LimoAlt">LimoAlt</a>（這個推會轉黃推🔞）
+            Twitter/X：<a target="_blank" href="https://x.com/LimoMell">LimoMell</a>、<a target="_blank"
+                href="https://x.com/LimoAlt">LimoAlt</a>（這個推會轉黃推🔞）
         </p>
         <p>友邀隨我心情過，通常毛毛或音遊眾會回應</p>
 
@@ -102,7 +124,8 @@
         <h2>🐾 關於設定</h2>
         <h3>*所有圖片皆嚴禁用於 AI 相關應用、二次修改、未經許可轉載。*</h3>
         <p>終於是有個自己的設定啦～雖然還沒委什麼圖但入圈多久了才有自己的設定ww（2023 年底入圈的</p>
-        <img href="#" id="chara1fursonaOF" src="assets/characters/1-fursona-image.png" alt="Limo's fursona preview" width="240">
+        <img href="#" id="chara1fursonaOF" src="assets/characters/1-fursona-image.png" alt="Limo's fursona preview"
+            width="240" loading="lazy">
         <h3>里莫/Limo</h3>
         <p>
             • 有些彩虹的元素：靈感是 WACCA 的ルーン，覺得他很帥<br>
@@ -122,11 +145,12 @@
     <div class="bottom">
         <p id="updateDateEgg">更新日期：2026/2/9</p>
         <button class="themeToggle" type="button" id="themeToggle" aria-label="Theme toggle">
-            <img id="themeToggleIcon" src="assets/icons/light-theme.png" alt="Theme toggle" class="themeToggleIcon" width="24" height="24">
+            <img id="themeToggleIcon" src="assets/icons/light-theme.png" alt="Theme toggle" class="themeToggleIcon"
+                width="24" height="24" loading="lazy">
         </button>
     </div>
-    <script src="script.js"></script>
 </body>
+
 </html>
 <!--
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*             .*@@@%#%@@@@@@@@@@@@@@@@@@@@@@@@@
