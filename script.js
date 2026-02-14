@@ -573,7 +573,9 @@
         { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" },
         { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん" },
         { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" },
-        { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" }
+        { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" },
+        { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん" },
+        { artist: "BTB", title: "Weißer Flügel (source from ニコニコ)", url: "https://www.nicovideo.jp/watch/sm35039151" }
 
         // { artist: "", title: "", url: "", from: "", unofficial: trueOr }
     ];
