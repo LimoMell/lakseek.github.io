@@ -434,7 +434,7 @@
 (function () {
     const THRESHOLD = 6;
     const RESET_DELAY = 1500;
-    const updateDateBaka = document.getElementById("updateDateEgg");
+    const updateDateBaka = document.getElementById("updateDateBaka");
 
     if (!updateDateBaka) return;
 
@@ -509,77 +509,71 @@
 (function () {
     const songs = [
         // MSTP
-        { artist: "C418", title: "Alpha", url: "https://youtu.be/q6o7qpPHd7g", from: "Minecraft" },
-        { artist: "KIVΛ, Ice", title: "͟͝͞Ⅱ́̕", url: "https://youtu.be/H2k7TMT3ouA", from: "Cytus II" },
-        { artist: "KIVΛ", title: "The Whole Rest", url: "https://youtu.be/TWqMQeVqqnA", from: "Cytus II" },
-        { artist: "Theatrum Aeternum", title: "acta est fabula, plaudite", url: "https://youtu.be/TPTsSu77MKI", from: "vivid/stasis" },
-        { artist: "eicateve", title: "R.I.P.", url: "https://youtu.be/QJakdR6FWdg" },
-        { artist: "Poppin'Party", title: "Returns", url: "https://youtu.be/zWKV5yudE18", from: "BanG Dream!" },
-        { artist: "ryo (supercell)", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", unofficial: true },
-        { artist: "Ice", title: "L", url: "https://youtu.be/ZXy_1LA-RlA" },
-        { artist: "Ice", title: "L2 -Ascension- (Act 1)", url: "https://youtu.be/lAkUpYCUXCU", unofficial: true },
-        { artist: "Ice", title: "L2 -Ascension- (Act 2)", url: "https://youtu.be/8nF7MU5iGng", unofficial: true },
-        { artist: "Toby Fox", title: "MEGALOVANIA", url: "https://youtu.be/KK3KXAECte4", from: "UNDERTALE" },
-        { artist: "ああああ", title: "トゥルエンド", url: "https://youtu.be/hK7Inl9Rark", from: "でびるコネクショん" },
-        { artist: "Sta", title: "Incyde", url: "https://youtu.be/-1OiVXRGE-U", from: "Cytus II" },
-        { artist: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ", title: "paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0" },
-        { artist: "Knighthood", title: "Super Universe (Knighthood Remix)", url: "https://youtu.be/v7rqB-o52tE", unofficial: true },
-        { artist: "technoplanet", title: "XYZ", url: "https://youtu.be/ZYXFo637GNc", from: "Cytus II" },
-        { artist: "Team Grimoire", title: "Grievous Lady", url: "https://youtu.be/QXeaLw2s-Wo", from: "Arcaea" },
-        { artist: "Team Grimoire", title: "Rrhar'il", url: "https://youtu.be/Hwny8gQRYZA", from: "Phigros" },
-        { artist: "Cheetah Mobile", title: "Neon", url: "https://youtu.be/pJIh0KPl98s", from: "Rolling Sky" },
-        { artist: "Dimrain47", title: "At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A" },
-        { artist: "cYsmix", title: "Peer Gynt", url: "https://youtu.be/w4dLTLW6dJ0", unofficial: true },
-        { artist: "USAO & Camellia", title: "Möbius", url: "https://youtu.be/2fsZdfixj60", from: "WACCA" },
-        { artist: "Antistar feat. Ctymax", title: "Class Memories", url: "https://youtu.be/3Ka6yPBCs5A", unofficial: true },
-        { artist: "uma vs. モリモリあつし", title: "Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg" },
+        { artist: "C418", title: "Alpha", url: "https://youtu.be/q6o7qpPHd7g", from: "Minecraft", source: "YouTube" },
+        { artist: "KIVΛ, Ice", title: "͟͝͞Ⅱ́̕", url: "https://youtu.be/H2k7TMT3ouA", from: "Cytus II", source: "YouTube" },
+        { artist: "KIVΛ", title: "The Whole Rest", url: "https://youtu.be/TWqMQeVqqnA", from: "Cytus II", source: "YouTube" },
+        { artist: "Theatrum Aeternum", title: "acta est fabula, plaudite", url: "https://youtu.be/TPTsSu77MKI", from: "vivid/stasis", source: "YouTube" },
+        { artist: "eicateve", title: "R.I.P.", url: "https://youtu.be/QJakdR6FWdg", source: "YouTube" },
+        { artist: "Poppin'Party", title: "Returns", url: "https://youtu.be/zWKV5yudE18", from: "BanG Dream!", source: "YouTube" },
+        { artist: "ryo (supercell)", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", source: "YouTube", unofficial: true },
+        { artist: "Ice", title: "L", url: "https://youtu.be/ZXy_1LA-RlA", source: "YouTube" },
+        { artist: "Ice", title: "L2 -Ascension- (Act 1)", url: "https://youtu.be/lAkUpYCUXCU", source: "YouTube", unofficial: true },
+        { artist: "Ice", title: "L2 -Ascension- (Act 2)", url: "https://youtu.be/8nF7MU5iGng", source: "YouTube", unofficial: true },
+        { artist: "Toby Fox", title: "MEGALOVANIA", url: "https://youtu.be/KK3KXAECte4", from: "UNDERTALE", source: "YouTube" },
+        { artist: "ああああ", title: "トゥルエンド", url: "https://youtu.be/hK7Inl9Rark", from: "でびるコネクショん", source: "YouTube" },
+        { artist: "Sta", title: "Incyde", url: "https://youtu.be/-1OiVXRGE-U", from: "Cytus II", source: "YouTube" },
+        { artist: "繊(Apo11o program vs. お月さま交響曲) ft.じまんぐ", title: "paradigm-paragramme-program", url: "https://youtu.be/8CNl8DZMAL0", from: "Cytus II", source: "YouTube" },
+        { artist: "Knighthood", title: "Super Universe (Knighthood Remix)", url: "https://youtu.be/v7rqB-o52tE", source: "YouTube", unofficial: true },
+        { artist: "technoplanet", title: "XYZ", url: "https://youtu.be/ZYXFo637GNc", from: "Cytus II", source: "YouTube" },
+        { artist: "Team Grimoire", title: "Grievous Lady", url: "https://youtu.be/QXeaLw2s-Wo", from: "Arcaea", source: "YouTube" },
+        { artist: "Team Grimoire", title: "Rrhar'il", url: "https://youtu.be/Hwny8gQRYZA", from: "Phigros", source: "YouTube" },
+        { artist: "Cheetah Mobile", title: "Neon", url: "https://youtu.be/pJIh0KPl98s", from: "Rolling Sky", source: "YouTube" },
+        { artist: "Dimrain47", title: "At the Speed of Light", url: "https://youtu.be/1Zrq8FiKS6A", source: "YouTube" },
+        { artist: "cYsmix", title: "Peer Gynt", url: "https://youtu.be/w4dLTLW6dJ0", source: "YouTube", unofficial: true },
+        { artist: "USAO & Camellia", title: "Möbius", url: "https://youtu.be/2fsZdfixj60", from: "WACCA", source: "YouTube" },
+        { artist: "Antistar feat. Ctymax", title: "Class Memories", url: "https://youtu.be/3Ka6yPBCs5A", source: "YouTube", unofficial: true },
+        { artist: "uma vs. モリモリあつし", title: "Re:End of a Dream", url: "https://youtu.be/ayg2A2JoRzg", source: "YouTube" },
 
         // 突然喜歡的歌
-        { artist: "A-One", title: "Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs" },
-        { artist: "上海アリス幻樂団", title: "偶像に世界を委ねて　〜 Idoratrize World", url: "https://youtu.be/7DF5wIPlvq0", from: "東方鬼形獣 〜 Wily Beast and Weakest Creature." },
-        { artist: "101-202-404", title: "小悪魔×3の大脫走！？", url: "https://youtu.be/HCgs32kX8eQ", from: "Cytus II", unofficial: true },
-        { artist: "黒皇帝", title: "Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM" },
-        { artist: "黒皇帝 vs MIssionary", title: "Deus Judicium", url: "https://youtu.be/CZJoFLSe9Ao", from: "Rotaeno" },
-        { artist: "seatrus", title: "零號車輛", url: "https://youtu.be/Mk0OFd9du0w", from: "Paradigm: Reboot" },
-        { artist: "NeLiME", title: "CODE NAME : ZERO", url: "https://youtu.be/26nQsUdhBNQ", from: "Cytus" },
-        { artist: "log()", title: "SELF", url: "https://youtu.be/q7PXMBjTVLc", from: "vivid/stasis" },
-        { artist: "Juggernaut.", title: "Revenant", url: "https://youtu.be/Oa9K-tWrMIU" },
-        { artist: "Ayatsugu_Revolved", title: "100sec Cat Dreams", url: "https://youtu.be/zBlmtNKgrk0", from: "Cytus II", unofficial: true },
-        { artist: "It's MyGO!!!!!", title: "詩超絆", url: "https://youtu.be/wJ-OebTVyvk", from: "BanG Dream!" },
-        { artist: "Poppin'Party", title: "Dreamers Go!", url: "https://youtu.be/VigNV3bsE_k", from: "BanG Dream!" },
-        { artist: "ああああ", title: "でびるコネクショん", url: "https://youtu.be/aQx9OjvQZEo", from: "でびるコネクショん" },
-        { artist: "KIVΛ", title: "Used to be", url: "https://youtu.be/hGaJNvkRfo0", from: "Cytus II" },
-        { artist: "やいり", title: "Ultimate feat. 放課後のあいつ", url: "https://youtu.be/j-n1Ah5zXT0", from: "Cytus II", unofficial: true },
-        { artist: "MELOIMAGE", title: "Imprint", url: "https://youtu.be/mTcFEVeVoDs", from: "Cytus II", unofficial: true },
-        { artist: "Apo11o program", title: "Re:The END -再-", url: "https://youtu.be/gnt9Bnei2is", from: "Cytus II" },
-        { artist: 'NOMA w/ Apo11o"ALGIEBA"program', title: "LAST Re;SØRT", url: "https://youtu.be/2a0wyR-Hu1Y", from: "RAVON" },
-        { artist: "Tobu", title: "Higher", url: "https://youtu.be/blA7epJJaR4" },
-        { artist: "ユリイ・カノン", title: "スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40" },
-        { artist: "上海アリス幻樂団", title: "平安のエイリアン", url: "https://youtu.be/1fwZxZIb2uE", from: "東方星蓮船 〜 Undefined Fantastic Object.", unofficial: true },
-        { artist: "Roselia", title: "Neo-Aspect", url: "https://youtu.be/03iVXFZ8jrs", from: "BanG Dream!" },
-        { artist: "RAISE A SUILEN", title: "DEAD HEAT BEAT", url: "https://youtu.be/2gJfjLGCf9U", from: "BanG Dream!" },
-        { artist: "DECO*27", title: "ヴァンパイア", url: "https://youtu.be/e1xCOsgWG0M" },
-        { artist: "溝口ゆうま feat. 大瀬良あい", title: "Nídhögg", url: "https://youtu.be/3w6I9Ye304o", from: "Cytus II" },
-        { artist: "Tsukasa", title: "Stardust Sphere", url: "https://youtu.be/f9XYU172ImI", from: "Cytus" },
-        { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II" },
-        { artist: "DJ Myosuke & Gram & t+pazolite", title: "Σ", url: "https://youtu.be/qbQHPdTLX40" },
-        { artist: "Y&Co.", title: "Daisuke", url: "https://youtu.be/T9rMDOkPiRY", unofficial: true },
-        { artist: "BlackY VS Yooh VS siromaru VS xi VS モリモリあつし", title: "創 -汝ら新世界へ歩む者なり-", url: "https://youtu.be/kLs6UW43MsQ", from: "CHUNITHM" },
-        { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす" },
-        { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす" },
-        { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん" },
-        { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0" },
-        { artist: "Ardolf", title: "(execute.)", url: "https://youtu.be/LJrTObZjVZg" },
-        { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis" },
-        { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん" },
-        { artist: "Consider", title: "夏目 (unofficial, source from Bilibili)", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで" },
-        { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" },
-        { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん" },
-        { artist: "BTB", title: "Weißer Flügel (source from ニコニコ)", url: "https://www.nicovideo.jp/watch/sm35039151" },
-        { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす" },
-        { artist: "大国奏音", title: "氷滅の135小節", url: "https://youtu.be/BdViA7YyrNw", from: "maimai でらっくす" }
+        { artist: "A-One", title: "Idoratrize World", url: "https://youtu.be/n8vn1iFDhAs", source: "YouTube" },
+        { artist: "上海アリス幻樂団", title: "偶像に世界を委ねて　〜 Idoratrize World", url: "https://youtu.be/7DF5wIPlvq0", from: "東方鬼形獣 〜 Wily Beast and Weakest Creature.", source: "YouTube" },
+        { artist: "101-202-404", title: "小悪魔×3の大脫走！？", url: "https://youtu.be/HCgs32kX8eQ", from: "Cytus II", source: "YouTube", unofficial: true },
+        { artist: "黒皇帝", title: "Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM", source: "YouTube" },
+        { artist: "黒皇帝 vs MIssionary", title: "Deus Judicium", url: "https://youtu.be/CZJoFLSe9Ao", from: "Rotaeno", source: "YouTube" },
+        { artist: "seatrus", title: "零號車輛", url: "https://youtu.be/Mk0OFd9du0w", from: "Paradigm: Reboot", source: "YouTube" },
+        { artist: "NeLiME", title: "CODE NAME : ZERO", url: "https://youtu.be/26nQsUdhBNQ", from: "Cytus", source: "YouTube" },
+        { artist: "log()", title: "SELF", url: "https://youtu.be/q7PXMBjTVLc", from: "vivid/stasis", source: "YouTube" },
+        { artist: "Ayatsugu_Revolved", title: "100sec Cat Dreams", url: "https://youtu.be/zBlmtNKgrk0", from: "Cytus II", source: "YouTube", unofficial: true },
+        { artist: "It's MyGO!!!!!", title: "詩超絆", url: "https://youtu.be/wJ-OebTVyvk", from: "BanG Dream!", source: "YouTube" },
+        { artist: "Poppin'Party", title: "Dreamers Go!", url: "https://youtu.be/VigNV3bsE_k", from: "BanG Dream!", source: "YouTube" },
+        { artist: "ああああ", title: "でびるコネクショん", url: "https://youtu.be/aQx9OjvQZEo", from: "でびるコネクショん", source: "YouTube" },
+        { artist: "KIVΛ", title: "Used to be", url: "https://youtu.be/hGaJNvkRfo0", from: "Cytus II", source: "YouTube" },
+        { artist: "MELOIMAGE", title: "Imprint", url: "https://youtu.be/mTcFEVeVoDs", from: "Cytus II", source: "YouTube", unofficial: true },
+        { artist: "Apo11o program", title: "Re:The END -再-", url: "https://youtu.be/gnt9Bnei2is", from: "Cytus II", source: "YouTube" },
+        { artist: 'NOMA w/ Apo11o"ALGIEBA"program', title: "LAST Re;SØRT", url: "https://youtu.be/2a0wyR-Hu1Y", from: "RAVON", source: "YouTube" },
+        { artist: "Tobu", title: "Higher", url: "https://youtu.be/blA7epJJaR4", source: "YouTube" },
+        { artist: "ユリイ・カノン", title: "スーサイドパレヱド", url: "https://youtu.be/7awIdGqyr40", source: "YouTube" },
+        { artist: "Roselia", title: "Neo-Aspect", url: "https://youtu.be/03iVXFZ8jrs", from: "BanG Dream!", source: "YouTube" },
+        { artist: "RAISE A SUILEN", title: "DEAD HEAT BEAT", url: "https://youtu.be/2gJfjLGCf9U", from: "BanG Dream!", source: "YouTube" },
+        { artist: "DECO*27", title: "ヴァンパイア", url: "https://youtu.be/e1xCOsgWG0M", source: "YouTube" },
+        { artist: "Tsukasa", title: "Stardust Sphere", url: "https://youtu.be/f9XYU172ImI", from: "Cytus", source: "YouTube" },
+        { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II", source: "YouTube" },
+        { artist: "DJ Myosuke & Gram & t+pazolite", title: "Σ", url: "https://youtu.be/qbQHPdTLX40", source: "YouTube" },
+        { artist: "Y&Co.", title: "Daisuke", url: "https://www.nicovideo.jp/watch/sm13256898", source: "ニコニコ" },
+        { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす", source: "YouTube" },
+        { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす", source: "YouTube" },
+        { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん", source: "YouTube" },
+        { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0", source: "YouTube" },
+        { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis", source: "YouTube" },
+        { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん", source: "YouTube" },
+        { artist: "Consider", title: "夏目", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで", source: "Bilibili", unofficial: true },
+        { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II", source: "YouTube" },
+        { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん", source: "YouTube" },
+        { artist: "BTB", title: "Weißer Flügel", url: "https://www.nicovideo.jp/watch/sm35039151", source: "ニコニコ" },
+        { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす", source: "YouTube" },
+        { artist: "大国奏音", title: "氷滅の135小節", url: "https://youtu.be/BdViA7YyrNw", from: "maimai でらっくす", source: "YouTube" }
 
-        // { artist: "", title: "", url: "", from: "", unofficial: trueOr }
+        // { artist: "", title: "", url: "", from: "", source: "" }
     ];
 
     if (songs.length === 0) {
@@ -622,10 +616,12 @@
 
         container.innerHTML = "";
 
+        /* 標題 */
         const titleWrapper = document.createElement("h3");
         titleWrapper.style.margin = "0 0 0.5rem 0";
         titleWrapper.style.fontSize = "1.1rem";
 
+        /* 標題 URL */
         const titleLink = document.createElement("a");
         titleLink.href = dailySong.url;
         titleLink.target = "_blank";
@@ -635,19 +631,101 @@
         titleWrapper.appendChild(titleLink);
         container.appendChild(titleWrapper);
 
+        /* 作曲家 */
         const artistDiv = document.createElement("p");
         artistDiv.style.margin = "0.3em 0";
         artistDiv.textContent = `作曲：${dailySong.artist}`;
         container.appendChild(artistDiv);
 
+        /* 來自 IP */
         if (dailySong.from) {
             const fromDiv = document.createElement("p");
             fromDiv.style.margin = "0.3em 0";
             fromDiv.textContent = `來自：${dailySong.from}`;
             container.appendChild(fromDiv);
         }
+
+        /* 來源平台 */
+        const sourceDiv = document.createElement("p");
+        sourceDiv.style.margin = "0.3em 0";
+        sourceDiv.textContent = `來源：${dailySong.source}`;
+        container.appendChild(sourceDiv);
     };
 
     const dailySong = selectDailySong();
     renderSongInfo(dailySong);
 })();
+
+/*
+                                                          #=--=             #--#                                                                                        
+                                                      +----------#        ----------                                                                                    
+                                                   *--------------%      --------------                                                                                 
+                                                 ------------------     -----------------%                                                                              
+                                               =-------------------     -------***---------#                                                                            
+                                             %----------******-----    %-----*+++++++=-------                                                                           
+                                            #--------*===+****-----    =----*++========-------#                                                                         
+                                           =-------+=======***-----    -----++===========-------                                                                        
+                                          +-------==========***----    -*+++*====****=====-------                                                                       
+                                         #-------=====**+=*++*-----    --+***++#*====*=====-------                                                                      
+                                         -------+===**==***##*----=   #.--+####%*#====*=====-------                                                                     
+                                        --------===**=#+#####*---=#   ++=--#####%%#===**====*------%                                                                    
+                                        -------====*=#-+##%#**--==#..++:=++*#*:##%%#===*=====-------                                                                    
+                                       #-------===+*#::=#%%#**====#.:::::-:+#::+#%%%#==*=====-------                                                                    
+                                       ==------===*%:::=%%%#+-----+.:::::::#+:::*#%%%#=*=====-------%                                                                   
+                                       =======**---#::=#%%%##-----=--::::::#+:::*#%%%#=*=====-------%                                                                   
+                                       #===+------%#==##%%%%##------======###*:###%%%#=*=====-------                                                                    
+                                       %=---------%#==##%%%%%##----------####=:+#%%%%#=*============                                                                    
+                                       -----------%#####%%%%%%#=---------########%%%%#=#===========%                                                                    
+                                      ---------#--+######%%%%%#-----------######%%%%%#--#==========                                                                     
+                                     -------==-----######%%%%---------------####%%%%#=---=========                                                                      
+                                    --=%  ===--------=####----------------------====------*======%                                                                      
+                                          %----*---=-::::::-------------::::::::::::::----======%                                                                       
+                                          ----+--::::::::-:::::------:::::::::::::::::::--*====%                                                                        
+                                         #----+::::::::::::::::::+-::::::::::::::::::::::-*===                                                                          
+                                         =---#=:#####+:::::::::::::::::::::::::::####+-::---%                                                                           
+                                        %+---==:#::::+=*#*#-=-::::::::::::=##*#++++::::::+-----#                                                                        
+                                      ====---==::::::+===#==:::::::::::::::+++#++++::::::---------%                                                                     
+                                     %=====-#==*:::###*+++--:::::::::::::=+####*------:::---------%                                                                     
+                                        #===#==#:::::---::::::::::::::::::::::----::::::========                                                                        
+                                           %===+:::-------:::::::*==::*::::::--=---::::=====%                                                                           
+                                               %=#:::::::::::::::=====:::::::::::::::===%                                                                               
+                                               %====+%:::::::::::=====:::::::::::%+=====#                                                                               
+                                               #%% @**####%%%%--::===:::--%%%######    %                                                                                
+                                                  **########%%%::::::::::%########*#%                                                                                   
+                                                 *##########%%#=##*::*##=###########*%                                                                                  
+                                     %%%%%%%%%%%@%%%%%%%#::::::%::::::::%:====%%%%%%%%%%%%%%%%%@@%%                                                                     
+                         %%%%%%%%%:::**%%%%%%%%%%%%%%===+=**::::#-%::%-#:::=+======%%%%%%%%%%%%%%**:::%%%%%%%%%                                                         
+                  %#***+%%%%%%%%%%%***************#=======+=:::::::::::::::==+=======#***************%%%%%%%%%%%+***#%                                                  
+             %*++++++%%%%#%%%%%%%%+++++++*********========+=+---------------=+========*********+++++++%%%%%%%%#%%%%++++++*%                                             
+         *+++++++++%%%**%%%%%%%%%++++++++++++*****+======+==-------++-------==+======#*****++++++++++++%%%%%%%%%**%%%+++++++++*                                         
+     @##**+++++++%%%*+%%%%%%%%%%%+++++++++++++++###========------++++++------========###+++++++++++++++%%%%%%%%%%%+*%%%+++++++**##@                                     
+             %++%%*++%%%%%*%%%##++++++++++++++++++##====*==---#++++++++++#---==*====##++++++++++++++++++##%%%*%%%%%++*%%++%                                             
+               %*+++%%%%%*%%#*##+++++++++++++++++++#=======-----++++++++-----=======#+++++++++++++++++++##*#%%*%%%%%++*+%                                               
+                *++@@@@%+%%#**%##++++++++++++++++-=====*===-------++++-------===*=====-++++++++++++++++##%**#%%+%@@@@++* @                                              
+              *  +@@@@%++%%*++*##++++++++++++++##%====#====--------++--------====#====+**++++++++++++++##*++*%%++#@@@@*  *                                              
+             ++  @@@@@+++%#++++*##   @++++++++*###===#=====+----------------+=====#===***+++++++++@   ##*++++#%+++@@@@@  ++                                             
+                 @@@@+++%%++++++%##%   @+++++++++#+#+========--------------========+%+*+++++++++@   %##%++++++%%+++@@@@                                                 
+                 @@@@#@@%%+   #++#####  %+++++++++++@===========--------+==========@+++++++++++%  #####++#   +%%@@#@@@@                                                 
+                 @@@    %%*     *##***%####%%%%%%##%%==============================%%##%%%%%%####%***##*      %%    @@@                                                 
+                 @@@     %       %#%+++++***##%**++*@+*==========================++@*++**%##***+++++%#%       %     @@@                                                 
+                 @@@     %%       ##*     *+*##%**+++*+++*====================*+++*+++*+%##*+*     *##        %     @@@                                                 
+                  @@      %        #%     @+++++%%+++%#++++++++++++++++++++++++++#%+++%%+++++@     %#        %      @@                                                  
+                   @@      %        #%     ++++++++++++=+@+++++++%++++%+++++++@+=++++++++++++     %#        %      @@                                                   
+                    @@     *+         %    *++++@   %======+++#++++++++++#+++======%   @++++*    %         +*     @@                                                    
+                             *         ++  @+*      =========+  +++++++@  +=========      *+@  ++         #                                                             
+                      *++*              *   @       =========  #++++++     =========       @   *              *++*                                                      
+                      +++                           ========%  +======     %========                           +++                                                      
+                                                    =======%   =======%     %======= +====+%                                                                            
+                                                    ===*==%    =======+      %==*=============                                                                          
+                                                    %===+      ========%       *===%===========%                                                                        
+                                                               =========        +++=============                                                                        
+                                                               #=========     %++++*============%                                                                       
+                                                                ==========%+++++++++============%                                                                       
+                                                                +===========+++++++=============                                                                        
+                                                                 ==============+===============%                                                                        
+                                                                  ============================*                                                                         
+                                                                   ==========================#==%                                                                       
+                                                                    *=====+=====================%                                                                       
+                                                                      *======#=================                                                                         
+                                                                         %===%  %+==========%                                                                           
+*/
