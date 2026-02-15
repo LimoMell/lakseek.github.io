@@ -464,7 +464,7 @@
 
 // Limo 設定圖 OF
 (function () {
-    const link = document.getElementById("chara1fursonaOF");
+    const link = document.getElementById("chara1FursonaOF");
     if (!link || !window.openMediaPreview) return;
 
     link.addEventListener("click", (e) => {
@@ -482,7 +482,7 @@
 
 // Limo 的圖
 (function () {
-    const link = document.getElementById("chara1arts");
+    const link = document.getElementById("chara1Arts");
     if (!link || !window.openMediaPreview) return;
 
     link.addEventListener("click", (e) => {
@@ -576,14 +576,6 @@
         // { artist: "", title: "", url: "", from: "", source: "" }
     ];
 
-    if (songs.length === 0) {
-        const container = document.getElementById("dailySongContainer");
-        if (container) {
-            container.innerHTML = "<p>（這裡還沒有歌曲呢QwQ）</p>";
-        }
-        return;
-    }
-
     const getDailySeed = () => {
         const today = new Date();
         const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
@@ -616,12 +608,12 @@
 
         container.innerHTML = "";
 
-        /* 標題 */
+        // 標題
         const titleWrapper = document.createElement("h3");
         titleWrapper.style.margin = "0 0 0.5rem 0";
         titleWrapper.style.fontSize = "1.1rem";
 
-        /* 標題 URL */
+        // 標題 URL + 非公式音源標籤
         const titleLink = document.createElement("a");
         titleLink.href = dailySong.url;
         titleLink.target = "_blank";
@@ -631,13 +623,13 @@
         titleWrapper.appendChild(titleLink);
         container.appendChild(titleWrapper);
 
-        /* 作曲家 */
+        // 作曲家
         const artistDiv = document.createElement("p");
         artistDiv.style.margin = "0.3em 0";
         artistDiv.textContent = `作曲：${dailySong.artist}`;
         container.appendChild(artistDiv);
 
-        /* 來自 IP */
+        // 來自 IP
         if (dailySong.from) {
             const fromDiv = document.createElement("p");
             fromDiv.style.margin = "0.3em 0";
@@ -645,7 +637,7 @@
             container.appendChild(fromDiv);
         }
 
-        /* 來源平台 */
+        // 來源平台
         const sourceDiv = document.createElement("p");
         sourceDiv.style.margin = "0.3em 0";
         sourceDiv.textContent = `來源：${dailySong.source}`;
