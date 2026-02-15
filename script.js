@@ -571,7 +571,8 @@
         { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん", source: "YouTube" },
         { artist: "BTB", title: "Weißer Flügel", url: "https://www.nicovideo.jp/watch/sm35039151", source: "ニコニコ" },
         { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす", source: "YouTube" },
-        { artist: "大国奏音", title: "氷滅の135小節", url: "https://youtu.be/BdViA7YyrNw", from: "maimai でらっくす", source: "YouTube" }
+        { artist: "大国奏音", title: "氷滅の135小節", url: "https://youtu.be/BdViA7YyrNw", from: "maimai でらっくす", source: "YouTube" },
+        { artist: "Kry.exe-天利", title: "Sigma (Haocore Mix) ~ Regrets of the Yellow Tulip ~", url: "https://youtu.be/8iwB9-9kKRQ", from: "Phigros", source: "YouTube", unofficial: true }
 
         // { artist: "", title: "", url: "", from: "", source: "" }
     ];
