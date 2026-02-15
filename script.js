@@ -74,8 +74,8 @@
 (function () {
     const TOAST_OFFSET_STEP = 4; // 3.5rem + 0.5rem
     const TOAST_BASE_BOTTOM = 3; // rem
-    const TOAST_REMOVE_DELAY = 400; // ms
-    const DEFAULT_DURATION = 2200; // ms
+    const TOAST_REMOVE_DELAY = 400;
+    const DEFAULT_DURATION = 2200;
 
     let activeToasts = [];
     let toastContainer = null;
@@ -350,7 +350,7 @@
 
             const thumbImg = document.createElement("img");
             thumbImg.src = image.src;
-            thumbImg.alt = image.alt || `圖片 ${index + 1}`;
+            thumbImg.alt = image.alt || `Thumbnail ${index + 1}`;
 
             thumbWrapper.appendChild(thumbImg);
             thumbWrapper.addEventListener("click", () => showImage(index));
@@ -386,9 +386,7 @@
 // 彩蛋觸發：↑↑↓↓←→←→BABA
 (function () {
     const KONAMI_CODE = [
-        "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
-        "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
-        "KeyB", "KeyA", "KeyB", "KeyA"
+        "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA", "KeyB", "KeyA"
     ];
 
     let index = 0;
@@ -558,7 +556,6 @@
         { artist: "DECO*27", title: "ヴァンパイア", url: "https://youtu.be/e1xCOsgWG0M", source: "YouTube" },
         { artist: "Tsukasa", title: "Stardust Sphere", url: "https://youtu.be/f9XYU172ImI", from: "Cytus", source: "YouTube" },
         { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II", source: "YouTube" },
-        { artist: "DJ Myosuke & Gram & t+pazolite", title: "Σ", url: "https://youtu.be/qbQHPdTLX40", source: "YouTube" },
         { artist: "Y&Co.", title: "Daisuke", url: "https://www.nicovideo.jp/watch/sm13256898", source: "ニコニコ" },
         { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす", source: "YouTube" },
         { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす", source: "YouTube" },
@@ -571,7 +568,6 @@
         { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん", source: "YouTube" },
         { artist: "BTB", title: "Weißer Flügel", url: "https://www.nicovideo.jp/watch/sm35039151", source: "ニコニコ" },
         { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす", source: "YouTube" },
-        { artist: "大国奏音", title: "氷滅の135小節", url: "https://youtu.be/BdViA7YyrNw", from: "maimai でらっくす", source: "YouTube" },
         { artist: "Kry.exe-天利", title: "Sigma (Haocore Mix) ~ Regrets of the Yellow Tulip ~", url: "https://youtu.be/8iwB9-9kKRQ", from: "Phigros", source: "YouTube", unofficial: true }
 
         // { artist: "", title: "", url: "", from: "", source: "" }

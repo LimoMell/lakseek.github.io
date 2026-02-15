@@ -562,6 +562,14 @@ html.media-preview-open {
     }
 }
 
+/* Link select */
+#chara1FursonaOF {
+    cursor: pointer;
+}
+#chara1Arts {
+    cursor: pointer;
+}
+
 /*
                                       *###################=                                         
                                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*                                    
