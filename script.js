@@ -473,7 +473,7 @@
             images: [{
                 src: "assets/characters/artworks/1/fursona-of.png",
                 alt: "Limo's fursona picture",
-                caption: "里莫的設定圖",
+                caption: "イラスト：瑞樹",
                 downloadName: "limo-fursona.png"
             }]
         });
@@ -491,13 +491,13 @@
             images: [{
                 src: "assets/characters/artworks/1/new-lunar-year-2026-ych-a.png",
                 alt: "New lunar year YCH (A) by 瑞樹",
-                caption: "新年 YCH (A) | イラスト：瑞樹",
+                caption: "イラスト：瑞樹",
                 downloadName: "limo-pic1.png"
             },
             {
                 src: "assets/characters/artworks/1/new-lunar-year-2026-ych-b.png",
                 alt: "New lunar year YCH (B) by 瑞樹",
-                caption: "新年 YCH (B) | イラスト：瑞樹",
+                caption: "イラスト：瑞樹",
                 downloadName: "limo-pic2.png"
             }
             ]
