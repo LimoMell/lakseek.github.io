@@ -568,7 +568,9 @@
         { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん", source: "YouTube" },
         { artist: "BTB", title: "Weißer Flügel", url: "https://www.nicovideo.jp/watch/sm35039151", source: "ニコニコ" },
         { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす", source: "YouTube" },
-        { artist: "Kry.exe-天利", title: "Sigma (Haocore Mix) ~ Regrets of the Yellow Tulip ~", url: "https://youtu.be/8iwB9-9kKRQ", from: "Phigros", source: "YouTube", unofficial: true }
+        { artist: "Kry.exe-天利", title: "Sigma (Haocore Mix) ~ Regrets of the Yellow Tulip ~", url: "https://youtu.be/8iwB9-9kKRQ", from: "Phigros", source: "YouTube", unofficial: true },
+        { artist: "siromaru + cranky", title: "conflict", url: "https://youtu.be/e8HRTlkGD4Q", source: "YouTube" },
+        { artist: "HOYO-MiX", title: "Hope Is the Thing With Feathers", url: "https://youtu.be/f_E7TX8DSmM", from: "崩壊：スターレイル", source: "YouTube" }
 
         // { artist: "", title: "", url: "", from: "", source: "" }
     ];
@@ -637,7 +639,7 @@
         // 來源平台
         const sourceDiv = document.createElement("p");
         sourceDiv.style.margin = "0.3em 0";
-        sourceDiv.textContent = `來源：${dailySong.source}`;
+        sourceDiv.textContent = `平台：${dailySong.source}`;
         container.appendChild(sourceDiv);
     };
 
