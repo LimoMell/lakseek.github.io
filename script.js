@@ -474,7 +474,7 @@
                 src: "assets/characters/artworks/1/fursona-of.png",
                 alt: "Limo's fursona picture",
                 caption: "里莫的設定圖",
-                downloadName: "limo-fursona1.png"
+                downloadName: "limo-fursona.png"
             }]
         });
     });
@@ -576,7 +576,8 @@
         { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II" },
         { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん" },
         { artist: "BTB", title: "Weißer Flügel (source from ニコニコ)", url: "https://www.nicovideo.jp/watch/sm35039151" },
-        { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす" }
+        { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす" },
+        { artist: "大国奏音", title: "氷滅の135小節", url: "https://youtu.be/BdViA7YyrNw", from: "maimai でらっくす" }
 
         // { artist: "", title: "", url: "", from: "", unofficial: trueOr }
     ];
