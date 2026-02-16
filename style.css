@@ -185,7 +185,7 @@ body {
     background: var(--header-bg);
     color: var(--header-fg);
     border: 1px solid var(--header-fg);
-    font-size: 0.875rem;
+    font-size: 1rem;
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease, bottom 0.3s ease;
     pointer-events: none;
@@ -276,7 +276,7 @@ html.media-preview-open {
     display: none;
     text-align: center;
     padding: 2rem 1rem;
-    font-size: 0.875rem;
+    font-size: 1rem;
     opacity: 0.7;
     flex-direction: column;
     align-items: center;
@@ -389,7 +389,7 @@ html.media-preview-open {
 }
 
 .media-preview-caption {
-    font-size: 0.875rem;
+    font-size: 1rem;
     padding: 0;
     line-height: 1.4;
     flex-shrink: 0;
@@ -413,7 +413,7 @@ html.media-preview-open {
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 0.875rem;
+    font-size: 1rem;
     height: 2rem;
     display: flex;
     align-items: center;
@@ -491,7 +491,7 @@ html.media-preview-open {
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
-    font-size: 0.875rem;
+    font-size: 1rem;
     flex: 0 0 auto;
 }
 
@@ -537,12 +537,12 @@ html.media-preview-open {
     }
 
     .media-preview-button {
-        font-size: 0.8rem;
+        font-size: 1rem;
         padding: 0.375rem 0.5rem;
     }
 
     .media-preview-caption {
-        font-size: 0.8rem;
+        font-size: 1rem;
         padding: 0;
     }
 
@@ -558,7 +558,7 @@ html.media-preview-open {
 
     .media-preview-nav-button {
         padding: 0.25rem 0.375rem;
-        font-size: 0.75rem;
+        font-size: 1rem;
     }
 }
 
