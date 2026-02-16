@@ -569,7 +569,8 @@
         { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす", source: "YouTube" },
         { artist: "Kry.exe-天利", title: "Sigma (Haocore Mix) ~ Regrets of the Yellow Tulip ~", url: "https://youtu.be/8iwB9-9kKRQ", from: "Phigros", source: "YouTube", unofficial: true },
         { artist: "siromaru + cranky", title: "conflict", url: "https://youtu.be/e8HRTlkGD4Q", source: "YouTube" },
-        { artist: "HOYO-MiX", title: "Hope Is the Thing With Feathers", url: "https://youtu.be/f_E7TX8DSmM", from: "崩壊：スターレイル", source: "YouTube" }
+        { artist: "HOYO-MiX", title: "Hope Is the Thing With Feathers", url: "https://youtu.be/f_E7TX8DSmM", from: "崩壊：スターレイル", source: "YouTube" },
+        { artist: "花譜", title: "邂逅", url: "https://youtu.be/Q5DlTbOeNdQ", source: "YouTube" }
 
         // { artist: "", title: "", url: "", from: "", source: "" }
     ];
