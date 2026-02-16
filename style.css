@@ -150,7 +150,7 @@ body {
 .bottom {
     background: var(--header-bg);
     color: var(--header-fg);
-    padding: 1rem;
+    padding: 1.5rem;
     margin-top: 2rem;
     border: none;
     display: flex;
@@ -161,7 +161,7 @@ body {
 
 .bottom p {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: 1rem;
 }
 
 .toast-container {

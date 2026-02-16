@@ -538,7 +538,6 @@
         { artist: "101-202-404", title: "小悪魔×3の大脫走！？", url: "https://youtu.be/HCgs32kX8eQ", from: "Cytus II", source: "YouTube", unofficial: true },
         { artist: "黒皇帝", title: "Galaxy Collapse", url: "https://youtu.be/VJFNcHgQ4HM", source: "YouTube" },
         { artist: "黒皇帝 vs MIssionary", title: "Deus Judicium", url: "https://youtu.be/CZJoFLSe9Ao", from: "Rotaeno", source: "YouTube" },
-        { artist: "seatrus", title: "零號車輛", url: "https://youtu.be/Mk0OFd9du0w", from: "Paradigm: Reboot", source: "YouTube" },
         { artist: "NeLiME", title: "CODE NAME : ZERO", url: "https://youtu.be/26nQsUdhBNQ", from: "Cytus", source: "YouTube" },
         { artist: "log()", title: "SELF", url: "https://youtu.be/q7PXMBjTVLc", from: "vivid/stasis", source: "YouTube" },
         { artist: "Ayatsugu_Revolved", title: "100sec Cat Dreams", url: "https://youtu.be/zBlmtNKgrk0", from: "Cytus II", source: "YouTube", unofficial: true },
@@ -617,7 +616,7 @@
         titleLink.href = dailySong.url;
         titleLink.target = "_blank";
         titleLink.rel = "noopener noreferrer";
-        titleLink.textContent = dailySong.unofficial ? `${dailySong.title} (unofficial)` : dailySong.title;
+        titleLink.textContent = dailySong.unofficial ? `${dailySong.title}（非公式音源）` : dailySong.title;
 
         titleWrapper.appendChild(titleLink);
         container.appendChild(titleWrapper);
@@ -719,4 +718,5 @@
                                                                     *=====+=====================%                                                                       
                                                                       *======#=================                                                                         
                                                                          %===%  %+==========%                                                                           
+#でびコネ
 */
