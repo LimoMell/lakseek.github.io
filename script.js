@@ -482,7 +482,7 @@
         { artist: "Theatrum Aeternum", title: "acta est fabula, plaudite", url: "https://youtu.be/TPTsSu77MKI", from: "vivid/stasis", platform: "YouTube" },
         { artist: "eicateve", title: "R.I.P.", url: "https://youtu.be/QJakdR6FWdg", platform: "YouTube" },
         { artist: "Poppin'Party", title: "Returns", url: "https://youtu.be/zWKV5yudE18", from: "BanG Dream!", platform: "YouTube" },
-        { artist: "ryo (supercell)", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", platform: "YouTube", unofficial: true },
+        { artist: "ryo", title: "ODDS&ENDS", url: "https://youtu.be/HUzLUGKwQJc", platform: "YouTube", unofficial: true },
         { artist: "Ice", title: "L", url: "https://youtu.be/ZXy_1LA-RlA", platform: "YouTube" },
         { artist: "Ice", title: "L2 -Ascension- (Act 1)", url: "https://youtu.be/lAkUpYCUXCU", platform: "YouTube", unofficial: true },
         { artist: "Ice", title: "L2 -Ascension- (Act 2)", url: "https://youtu.be/8nF7MU5iGng", platform: "YouTube", unofficial: true },
@@ -541,7 +541,15 @@
         { artist: "花譜", title: "邂逅", url: "https://youtu.be/Q5DlTbOeNdQ", platform: "YouTube" },
         { artist: "wowaka", title: "ローリンガール", url: "https://youtu.be/vnw8zURAxkU", platform: "YouTube" },
         { artist: "Bon Jovi", title: "It's My Life", url: "https://youtu.be/vx2u5uUu3DE", platform: "YouTube" },
-        { artist: "MyReminiscence", title: "Memory", url: "https://youtu.be/alfnHgCTWr0", from: "Ib", platform: "YouTube" }
+        { artist: "MyReminiscence", title: "Memory", url: "https://youtu.be/alfnHgCTWr0", from: "Ib", platform: "YouTube" },
+        { artist: "garlagan", title: "Is This It Is It", url: "https://youtu.be/K6iKoB12Ftg", platform: "YouTube" },
+        { artist: "Tatsh&NAOKI", title: "REDZONE <Platinum Long Version>", url: "https://youtu.be/2411fXLYKo4", platform: "YouTube", unofficial: true },
+        { artist: "ryo", title: "メルト", url: "https://www.nicovideo.jp/watch/sm1715919", platform: "ニコニコ" },
+        { artist: "Virtual Self", title: "Particle Arts", url: "https://youtu.be/b06pKMxF6h8", platform: "YouTube" },
+        { artist: "TheFatRat", title: "Never Be Alone", url: "https://youtu.be/Ic-gZlPFTkQ", platform: "YouTube" },
+        { artist: "鄭秀文 Sammi Cheng", title: "煞科", url: "https://youtu.be/wVZdkt38YO0", platform: "YouTube" },
+        { artist: "CHAGE and ASKA", title: "On Your Mark", url: "https://youtu.be/3Obh9kg6o_U", platform: "YouTube" },
+        { artist: "Porter Robinson & Madeon", title: "Shelter", url: "https://youtu.be/fzQ6gRAEoy0", platform: "YouTube" }
 
         // { artist: "", title: "", url: "", from: "", platform: "" }
     ];
