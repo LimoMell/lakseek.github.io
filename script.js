@@ -547,10 +547,10 @@
         { artist: "ryo", title: "メルト", url: "https://www.nicovideo.jp/watch/sm1715919", platform: "ニコニコ" },
         { artist: "Virtual Self", title: "Particle Arts", url: "https://youtu.be/b06pKMxF6h8", platform: "YouTube" },
         { artist: "TheFatRat", title: "Never Be Alone", url: "https://youtu.be/Ic-gZlPFTkQ", platform: "YouTube" },
-        { artist: "鄭秀文 Sammi Cheng", title: "煞科", url: "https://youtu.be/wVZdkt38YO0", platform: "YouTube" },
         { artist: "CHAGE and ASKA", title: "On Your Mark", url: "https://youtu.be/3Obh9kg6o_U", platform: "YouTube" },
         { artist: "Porter Robinson & Madeon", title: "Shelter", url: "https://youtu.be/fzQ6gRAEoy0", platform: "YouTube" },
-        { artist: "nekodex", title: "circles!", url: "https://youtu.be/ytNl9wBWaRY", from: "osu!", platform: "YouTube" }
+        { artist: "nekodex", title: "circles!", url: "https://youtu.be/ytNl9wBWaRY", from: "osu!", platform: "YouTube" },
+        { artist: "Cres", title: "End Time", url: "https://youtu.be/9-bLRFOTVQM", platform: "YouTube" }
 
         // { artist: "", title: "", url: "", from: "", platform: "" }
     ];
