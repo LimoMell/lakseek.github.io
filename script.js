@@ -525,13 +525,11 @@
         { artist: "Ice", title: "iL", url: "https://youtu.be/ilLGb4b7Twc", from: "Cytus II", platform: "YouTube" },
         { artist: "Y&Co.", title: "Daisuke", url: "https://www.nicovideo.jp/watch/sm13256898", platform: "ニコニコ" },
         { artist: "xi", title: "Xaleid◆scopiX", url: "https://youtu.be/-PTe8zkYt9A", from: "maimai でらっくす", platform: "YouTube" },
-        { artist: "Shu feat. 天羽しろっぷ", title: "殿ッ！？ご乱心！？", url: "https://youtu.be/U2i_IuAB6wo", from: "maimai でらっくす", platform: "YouTube" },
         { artist: "ああああ", title: "優しさに触れて", url: "https://youtu.be/f8qaWMjyVWU", from: "でびるコネクショん", platform: "YouTube" },
         { artist: "Quree", title: "HTTPS", url: "https://youtu.be/dQZ14TWuhi0", platform: "YouTube" },
         { artist: "Kry.exe vs. Ganymede", title: "First Breath", url: "https://youtu.be/fJu8paff0Xw", from: "vivid/stasis", platform: "YouTube" },
         { artist: "ああああ", title: "そうして明日も続いていく", url: "https://youtu.be/Go1R4PHAnec", from: "でびるコネクショん", platform: "YouTube" },
         { artist: "Consider", title: "夏目", url: "https://www.bilibili.com/video/BV1FCVAzZEcE/", from: "この雪が解けるまで", platform: "Bilibili", unofficial: true },
-        { artist: 'Apo11o"EQUATOR"program vs.Nightster', title: "ΛVeS", url: "https://youtu.be/C_AXYPvm5V0", from: "DEEMO II", platform: "YouTube" },
         { artist: "ああああ", title: "ここが居場所", url: "https://youtu.be/yP29FeiZlpk", from: "でびるコネクショん", platform: "YouTube" },
         { artist: "BTB", title: "Weißer Flügel", url: "https://www.nicovideo.jp/watch/sm35039151", platform: "ニコニコ" },
         { artist: "大国奏音", title: "封焔の135秒", url: "https://youtu.be/gSaVkMJpdcQ", from: "maimai でらっくす", platform: "YouTube" },
@@ -550,7 +548,11 @@
         { artist: "CHAGE and ASKA", title: "On Your Mark", url: "https://youtu.be/3Obh9kg6o_U", platform: "YouTube" },
         { artist: "Porter Robinson & Madeon", title: "Shelter", url: "https://youtu.be/fzQ6gRAEoy0", platform: "YouTube" },
         { artist: "nekodex", title: "circles!", url: "https://youtu.be/ytNl9wBWaRY", from: "osu!", platform: "YouTube" },
-        { artist: "Cres", title: "End Time", url: "https://youtu.be/9-bLRFOTVQM", platform: "YouTube" }
+        { artist: "Cres", title: "End Time", url: "https://youtu.be/9-bLRFOTVQM", platform: "YouTube" },
+        { artist: "Gareth Coker", title: "Glide (Map 1)", url: "https://youtu.be/MSaxAAqw4Yw", from: "Minecraft (Legacy Console Edition)", platform: "YouTube" },
+        { artist: "Toby Fox", title: "null.mp3", url: "https://youtu.be/NRzDPg9tSzY", from: "DELTARUNE", platform: "YouTube" },
+        { artist: "t+pazolite", title: "Chrome Vox", url: "https://youtu.be/UDTNYzDy1j4", from: "Cytus II", platform: "YouTube" },
+        { artist: "COOL&CREATE", title: "ナイト・オブ・ナイツ", url: "https://youtu.be/2TTuH9BPwjI", platform: "YouTube" }
 
         // { artist: "", title: "", url: "", from: "", platform: "" }
     ];
