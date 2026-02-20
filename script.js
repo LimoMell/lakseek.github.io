@@ -550,9 +550,9 @@
         { artist: "nekodex", title: "circles!", url: "https://youtu.be/ytNl9wBWaRY", from: "osu!", platform: "YouTube" },
         { artist: "Cres", title: "End Time", url: "https://youtu.be/9-bLRFOTVQM", platform: "YouTube" },
         { artist: "Gareth Coker", title: "Glide (Map 1)", url: "https://youtu.be/MSaxAAqw4Yw", from: "Minecraft (Legacy Console Edition)", platform: "YouTube" },
-        { artist: "Toby Fox", title: "null.mp3", url: "https://youtu.be/NRzDPg9tSzY", from: "DELTARUNE", platform: "YouTube" },
         { artist: "t+pazolite", title: "Chrome Vox", url: "https://youtu.be/UDTNYzDy1j4", from: "Cytus II", platform: "YouTube" },
-        { artist: "COOL&CREATE", title: "ナイト・オブ・ナイツ", url: "https://youtu.be/2TTuH9BPwjI", platform: "YouTube" }
+        { artist: "COOL&CREATE", title: "ナイト・オブ・ナイツ", url: "https://youtu.be/2TTuH9BPwjI", platform: "YouTube" },
+        { artist: "烂活MAKER", title: "（一 w 一）", url: "https://www.bilibili.com/video/BV161snzzENH/", platform: "Bilibili" }
 
         // { artist: "", title: "", url: "", from: "", platform: "" }
     ];
