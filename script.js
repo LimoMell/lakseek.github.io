@@ -592,7 +592,7 @@
         // 標題
         const titleWrapper = document.createElement("h3");
         titleWrapper.style.margin = "0 0 0.5rem 0";
-        titleWrapper.style.fontSize = "1.1rem";
+        titleWrapper.style.fontSize = "1rem";
 
         // 標題 URL + 非公式音源標籤
         const titleLink = document.createElement("a");
