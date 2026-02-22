@@ -552,7 +552,8 @@
         { artist: "Gareth Coker", title: "Glide (Map 1)", url: "https://youtu.be/MSaxAAqw4Yw", from: "Minecraft (Legacy Console Edition)", platform: "YouTube" },
         { artist: "t+pazolite", title: "Chrome Vox", url: "https://youtu.be/UDTNYzDy1j4", from: "Cytus II", platform: "YouTube" },
         { artist: "COOL&CREATE", title: "ナイト・オブ・ナイツ", url: "https://youtu.be/2TTuH9BPwjI", platform: "YouTube" },
-        { artist: "烂活MAKER", title: "（一 w 一）", url: "https://www.bilibili.com/video/BV161snzzENH/", platform: "Bilibili" }
+        { artist: "烂活MAKER", title: "（一 w 一）", url: "https://www.bilibili.com/video/BV161snzzENH/", platform: "Bilibili" },
+        { artist: "ユメミド", title: "Lyrith -迷宮リリス-", url: "https://youtu.be/rum28o5J5Vo", platform: "YouTube" }
 
         // { artist: "", title: "", url: "", from: "", platform: "" }
     ];
